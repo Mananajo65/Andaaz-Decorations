@@ -1,5 +1,6 @@
 /* assets/css/styles.css
    Andaaz Decorations — luxury hospitality aesthetic (dark + ivory + maroon/gold)
+   Update: wider canvas + fluid type + premium vignette/texture so it stays elegant when zoomed out
 */
 
 :root{
@@ -22,7 +23,15 @@
   --shadow: 0 22px 60px rgba(0,0,0,.55);
   --shadow2: 0 10px 24px rgba(0,0,0,.30);
 
-  --max: 1180px;
+  /* Wider “hotel-grade” canvas */
+  --max: 1320px;
+
+  /* Fluid type scale */
+  --h1: clamp(38px, 3.6vw, 64px);
+  --h2: clamp(26px, 2.3vw, 36px);
+  --h3: clamp(16px, 1.25vw, 18px);
+  --lead: clamp(15px, 1.1vw, 17px);
+  --body: 15px;
 }
 
 /* Reset */
@@ -39,16 +48,55 @@ body{
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   background: var(--bg);
   color: var(--ink);
-  line-height: 1.55;
+  font-size: var(--body);
+  line-height: 1.6;
   letter-spacing: .2px;
+  overflow-x: hidden;
 }
+
+/* Premium vignette + subtle texture (no images required) */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(199,162,74,.08), transparent 60%),
+    radial-gradient(1100px 760px at 85% 18%, rgba(91,11,31,.10), transparent 60%),
+    radial-gradient(1200px 900px at 50% 90%, rgba(255,255,255,.04), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,.00), rgba(0,0,0,.22));
+  opacity: 1;
+}
+body::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  /* ultra subtle “linen” texture */
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,.03) 0,
+      rgba(255,255,255,.03) 1px,
+      transparent 1px,
+      transparent 10px
+    );
+  opacity: .12;
+  mix-blend-mode: overlay;
+}
+
+/* Ensure layout sits above background layers */
+header, main, footer { position: relative; z-index: 1; }
+
 .serif{
   font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
   letter-spacing: .2px;
 }
 .muted{color: var(--muted)}
 .small{font-size: 13px; color: rgba(233,229,222,.70)}
-.lead{font-size: 16px; color: rgba(233,229,222,.84); max-width: 72ch}
+.lead{font-size: var(--lead); color: rgba(233,229,222,.84); max-width: 76ch}
 .kicker{
   display:inline-flex;
   align-items:center;
@@ -69,9 +117,9 @@ body{
 .container{
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 22px;
+  padding: 0 26px; /* slightly wider gutters for upscale feel */
 }
-.section{padding: 56px 0}
+.section{padding: 64px 0}
 .hr{height:1px;background:var(--line);margin: 22px 0}
 .stack{display:flex;flex-direction:column;gap: 12px}
 .row{display:flex;gap: 14px;flex-wrap:wrap;align-items:center}
@@ -94,20 +142,20 @@ header{
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(12,13,16,.78);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+  background: rgba(12,13,16,.72);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,.10);
 }
 .navbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding: 16px 0;
+  padding: 18px 0;
   gap: 16px;
 }
 .brand{display:flex; align-items:center; gap: 10px;}
 .brand-mark{
-  width: 34px; height: 34px;
+  width: 36px; height: 36px;
   border-radius: 12px;
   background: radial-gradient(circle at 30% 30%, rgba(199,162,74,.9), rgba(91,11,31,.9));
   box-shadow: var(--shadow2);
@@ -141,9 +189,12 @@ header{
   font-weight: 650;
   font-size: 13px;
   cursor:pointer;
-  transition: transform .08s ease, background .2s ease, border-color .2s ease;
+  transition: transform .08s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.btn:hover{background: rgba(255,255,255,.10)}
+.btn:hover{
+  background: rgba(255,255,255,.10);
+  box-shadow: 0 10px 22px rgba(0,0,0,.22);
+}
 .btn:active{transform: translateY(1px)}
 .btn.primary{
   border-color: rgba(199,162,74,.55);
@@ -154,7 +205,7 @@ header{
 .btn.block{width:100%}
 
 /* Hero (Home) */
-.hero{padding: 44px 0 26px;}
+.hero{padding: 52px 0 28px;}
 .hero-card{
   border-radius: var(--radius2);
   overflow:hidden;
@@ -162,7 +213,7 @@ header{
   box-shadow: var(--shadow);
   background: #0b0b0d;
 }
-.hero-media{position: relative; min-height: 520px;}
+.hero-media{position: relative; min-height: 560px;}
 .hero-media img{
   width:100%;
   height:100%;
@@ -174,21 +225,21 @@ header{
   position:absolute; inset:0;
   background:
     radial-gradient(circle at 30% 40%, var(--warm-overlay), transparent 55%),
-    linear-gradient(180deg, rgba(12,13,16,.10), rgba(12,13,16,.85));
+    linear-gradient(180deg, rgba(12,13,16,.08), rgba(12,13,16,.90));
 }
 .hero-copy{
   position:absolute; inset:0;
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
-  padding: 34px;
+  padding: clamp(22px, 2.4vw, 40px);
   gap: 14px;
-  max-width: 900px;
+  max-width: 980px;
 }
-.hero h1{margin:0; font-size: 52px; line-height: 1.03;}
-.hero p{margin:0; font-size: 16px; color: rgba(233,229,222,.84); max-width: 62ch;}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-.pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.hero h1{margin:0; font-size: var(--h1); line-height: 1.03;}
+.hero p{margin:0; font-size: var(--lead); color: rgba(233,229,222,.84); max-width: 64ch;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .pill{
   font-size: 12px;
   padding: 8px 10px;
@@ -199,7 +250,7 @@ header{
 }
 
 /* Page hero (inner pages) */
-.page-hero{padding: 26px 0 8px;}
+.page-hero{padding: 30px 0 10px;}
 .page-hero .wrap{
   border-radius: var(--radius2);
   border: 1px solid rgba(255,255,255,.12);
@@ -207,10 +258,10 @@ header{
     radial-gradient(circle at 18% 20%, rgba(199,162,74,.16), transparent 55%),
     linear-gradient(135deg, rgba(91,11,31,.35), rgba(255,255,255,.04));
   box-shadow: var(--shadow2);
-  padding: 22px;
+  padding: 24px;
 }
-.page-hero h1{margin:0; font-size: 36px; line-height: 1.12;}
-.page-hero p{margin:10px 0 0; color: rgba(233,229,222,.80); max-width: 78ch}
+.page-hero h1{margin:0; font-size: clamp(30px, 2.6vw, 44px); line-height: 1.12;}
+.page-hero p{margin:10px 0 0; color: rgba(233,229,222,.80); max-width: 80ch}
 
 /* Cards + grids */
 .grid{display:grid;gap: 14px}
@@ -220,10 +271,10 @@ header{
   border-radius: var(--radius);
   border: 1px solid rgba(255,255,255,.12);
   background: rgba(255,255,255,.04);
-  padding: 18px;
-  box-shadow: 0 8px 22px rgba(0,0,0,.22);
+  padding: 20px;
+  box-shadow: 0 10px 26px rgba(0,0,0,.24);
 }
-.card h3{margin:0 0 8px; font-size: 16px}
+.card h3{margin:0 0 8px; font-size: var(--h3)}
 .card p{margin:0; color: rgba(233,229,222,.78); font-size: 14px}
 .link{
   display:inline-flex;
@@ -241,8 +292,8 @@ header{
   gap: 18px;
   margin-bottom: 18px;
 }
-.section h2{margin:0; font-size: 30px;}
-.sub{margin: 8px 0 0; color: rgba(233,229,222,.76); max-width: 70ch; font-size: 14px;}
+.section h2{margin:0; font-size: var(--h2);}
+.sub{margin: 8px 0 0; color: rgba(233,229,222,.76); max-width: 76ch; font-size: 14px;}
 
 /* CTA band */
 .band{
@@ -258,7 +309,7 @@ header{
   gap: 16px;
   box-shadow: var(--shadow2);
 }
-.band h3{margin:0; font-size: 22px}
+.band h3{margin:0; font-size: clamp(20px, 1.6vw, 24px)}
 .band p{margin:6px 0 0; color: rgba(233,229,222,.78)}
 
 /* Services: anchors + timeline */
@@ -326,11 +377,11 @@ header{
   border-radius: var(--radius2);
   border: 1px solid rgba(255,255,255,.12);
   background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(91,11,31,.10));
-  box-shadow: 0 8px 22px rgba(0,0,0,.22);
+  box-shadow: 0 10px 26px rgba(0,0,0,.24);
   overflow:hidden;
 }
 .tile-media{
-  height: 160px;
+  height: 170px;
   background:
     radial-gradient(circle at 25% 25%, rgba(199,162,74,.18), transparent 55%),
     linear-gradient(180deg, rgba(255,255,255,.06), rgba(12,13,16,.55));
@@ -361,7 +412,7 @@ header{
   border-radius: var(--radius2);
   border: 1px solid rgba(255,255,255,.12);
   background: rgba(255,255,255,.03);
-  box-shadow: 0 8px 22px rgba(0,0,0,.22);
+  box-shadow: 0 10px 26px rgba(0,0,0,.24);
   padding: 18px;
 }
 .form-grid{
@@ -377,7 +428,7 @@ input,select,textarea{
   background: rgba(255,255,255,.05);
   color: rgba(233,229,222,.92);
   padding: 12px 12px;
-    outline: none;
+  outline: none;
 }
 textarea{min-height: 120px; resize: vertical}
 .help{font-size: 12px; color: rgba(233,229,222,.68)}
@@ -401,7 +452,7 @@ textarea{min-height: 120px; resize: vertical}
 /* Footer */
 footer{
   border-top: 1px solid var(--line);
-  padding: 36px 0 46px;
+  padding: 44px 0 54px;
   color: rgba(233,229,222,.72);
 }
 .footer-grid{
@@ -420,8 +471,7 @@ footer{
   .navlinks{display:none}
   .mobile-toggle{display:inline-flex}
 
-  .hero h1{font-size: 40px}
-  .hero-media{min-height: 460px}
+  .hero-media{min-height: 480px}
   .band{flex-direction:column; align-items:flex-start}
   .footer-grid{grid-template-columns: 1fr}
 
