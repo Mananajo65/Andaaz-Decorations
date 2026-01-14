@@ -1,13 +1,8 @@
-// assets/js/main.js
-// Andaaz Decorations — mobile toggle + active nav + footer year + Hyatt tabs + panel-shift slider
-
 (function () {
   const ready = (fn) => {
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", fn, { once: true });
-    } else {
-      fn();
-    }
+    } else fn();
   };
 
   ready(() => {
@@ -25,7 +20,6 @@
       toggle.setAttribute("aria-expanded", "false");
       panel.setAttribute("aria-hidden", "true");
     };
-
     const openMenu = () => {
       if (!toggle || !panel) return;
       toggle.setAttribute("aria-expanded", "true");
@@ -43,10 +37,7 @@
       });
 
       $$("a", panel).forEach((a) => a.addEventListener("click", closeMenu));
-
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeMenu();
-      });
+      window.addEventListener("keydown", (e) => e.key === "Escape" && closeMenu());
 
       document.addEventListener("click", (e) => {
         const isOpen = toggle.getAttribute("aria-expanded") === "true";
@@ -57,7 +48,7 @@
     }
 
     // -----------------------------
-    // Active nav highlighting
+    // Active nav
     // -----------------------------
     const current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
     $$("[data-nav] a[href]").forEach((a) => {
@@ -74,13 +65,12 @@
     if (y) y.textContent = String(new Date().getFullYear());
 
     // -----------------------------
-    // HYATT TABS + PANEL-SHIFT SLIDER
+    // Hyatt slider
     // -----------------------------
     const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
     const sliderRoot = $("[data-hyatt-slider]");
     const tabsWrap = $("[data-hyatt-tabs]");
-
     if (!sliderRoot) return;
 
     const viewport = $("[data-hyatt-viewport]", sliderRoot);
@@ -100,8 +90,7 @@
     let animating = false;
     let activeCat = "stages";
 
-    const visibleSlides = () =>
-      allSlides.filter((s) => !s.hasAttribute("hidden"));
+    const visibleSlides = () => allSlides.filter((s) => !s.hasAttribute("hidden"));
 
     const readMeta = (slide) => {
       const kicker = slide?.querySelector(".slide-kicker")?.textContent?.trim() || "Signature";
@@ -109,36 +98,45 @@
       return { kicker, title };
     };
 
-    const measure = () => {
-      // After filtering, track.scrollWidth changes. This is exactly what we want.
+    const slidesPerView = () => {
+      const slide = visibleSlides()[0];
+      if (!slide) return 1;
       const vw = viewport.getBoundingClientRect().width;
-      const total = track.scrollWidth;
+      const sw = slide.getBoundingClientRect().width;
+      const gap = 16;
+      return Math.max(1, Math.floor((vw + gap) / (sw + gap)));
+    };
 
-      pages = Math.max(1, Math.ceil(total / vw));
+    const computePages = () => {
+      const n = visibleSlides().length;
+      const per = slidesPerView();
+      // Hyatt-style paging: advance by a "panel" (per-view group), not just "if overflow"
+      pages = Math.max(1, Math.ceil(n / per));
       if (page > pages - 1) page = pages - 1;
-
-      return { vw, total };
+      return { per, n };
     };
 
     const updateUI = () => {
       const vs = visibleSlides();
-      const firstVisible = vs[0];
-
-      const { kicker, title } = readMeta(firstVisible);
+      const first = vs[page * slidesPerView()] || vs[0];
+      const { kicker, title } = readMeta(first);
       if (label) label.textContent = `${kicker} · ${title}`;
       if (count) count.textContent = `${page + 1} / ${pages}`;
     };
 
     const apply = (immediate = false) => {
-      const { vw } = measure();
-      const x = -(page * vw);
+      const per = slidesPerView();
+      const slide = visibleSlides()[0];
+      if (!slide) return;
+
+      const sw = slide.getBoundingClientRect().width;
+      const gap = 16;
+      const x = -(page * per * (sw + gap));
 
       if (prefersReduced || immediate) {
         track.style.transition = "none";
         track.style.transform = `translate3d(${x}px,0,0)`;
-        requestAnimationFrame(() => {
-          track.style.transition = "";
-        });
+        requestAnimationFrame(() => (track.style.transition = ""));
       } else {
         track.style.transition = "transform 920ms cubic-bezier(.22,.9,.2,1)";
         track.style.transform = `translate3d(${x}px,0,0)`;
@@ -149,8 +147,7 @@
       if (animating) return;
       animating = true;
 
-      measure();
-
+      computePages();
       page += dir;
       if (page < 0) page = pages - 1;
       if (page > pages - 1) page = 0;
@@ -163,7 +160,6 @@
         track.removeEventListener("transitionend", done);
       };
       track.addEventListener("transitionend", done, { once: true });
-
       window.setTimeout(() => (animating = false), 980);
     };
 
@@ -171,40 +167,26 @@
       activeCat = cat;
       page = 0;
 
-      // Filter slides
       allSlides.forEach((s) => {
         const c = (s.getAttribute("data-cat") || "").toLowerCase();
         if (c === cat) s.removeAttribute("hidden");
         else s.setAttribute("hidden", "");
       });
 
-      // Reset translation immediately so it doesn't animate from old position
+      computePages();
       updateUI();
       apply(true);
     };
 
-    // Buttons
-    prevBtns.forEach((b) =>
-      b.addEventListener("click", (e) => {
-        e.preventDefault();
-        go(-1);
-      })
-    );
-    nextBtns.forEach((b) =>
-      b.addEventListener("click", (e) => {
-        e.preventDefault();
-        go(1);
-      })
-    );
+    prevBtns.forEach((b) => b.addEventListener("click", (e) => { e.preventDefault(); go(-1); }));
+    nextBtns.forEach((b) => b.addEventListener("click", (e) => { e.preventDefault(); go(1); }));
 
-    // Keyboard
     sliderRoot.setAttribute("tabindex", "0");
     sliderRoot.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") go(-1);
       if (e.key === "ArrowRight") go(1);
     });
 
-    // Tabs
     if (tabsWrap) {
       const tabs = $$("button[data-tab]", tabsWrap);
       tabs.forEach((t) => {
@@ -216,15 +198,12 @@
       });
     }
 
-    // Resize/zoom recalibration
-    const onResize = () => {
-      measure();
+    window.addEventListener("resize", () => {
+      computePages();
       updateUI();
       apply(true);
-    };
-    window.addEventListener("resize", onResize, { passive: true });
+    }, { passive: true });
 
-    // Init
     setCategory(activeCat);
   });
 })();
