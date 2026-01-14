@@ -1,5 +1,5 @@
 // assets/js/main.js
-// Andaaz Decorations — reliable mobile toggle + active nav + footer year + gallery filter + inquiry form (front-end only)
+// Andaaz Decorations — mobile toggle + active nav + footer year + gallery filter + inquiry form + Hyatt-style slider
 (function () {
   const ready = (fn) => {
     if (document.readyState === "loading") {
@@ -32,7 +32,6 @@
     };
 
     if (toggle && panel) {
-      // Normalize initial state (prevents “stuck open” between refreshes)
       if (!toggle.hasAttribute("aria-expanded")) toggle.setAttribute("aria-expanded", "false");
       if (!panel.hasAttribute("aria-hidden")) panel.setAttribute("aria-hidden", "true");
 
@@ -42,15 +41,12 @@
         isOpen ? closeMenu() : openMenu();
       });
 
-      // Close after tapping any link in mobile panel
       $$("a", panel).forEach((a) => a.addEventListener("click", closeMenu));
 
-      // Close on Escape
       window.addEventListener("keydown", (e) => {
         if (e.key === "Escape") closeMenu();
       });
 
-      // Close if clicking outside when open
       document.addEventListener("click", (e) => {
         const isOpen = toggle.getAttribute("aria-expanded") === "true";
         if (!isOpen) return;
@@ -58,7 +54,6 @@
         closeMenu();
       });
     } else {
-      // Not fatal; keeps pages usable even if markup changes
       console.warn("Mobile menu not wired: missing toggle or panel.", { toggle, panel });
     }
 
@@ -109,7 +104,6 @@
         });
       });
 
-      // Default state
       const first = buttons.find((b) => (b.getAttribute("data-filter") || "").toLowerCase() === "all") || buttons[0];
       if (first) {
         setActive(first);
@@ -145,7 +139,6 @@
         const date = String(form.elements["eventDate"]?.value || "").trim();
         const city = String(form.elements["venueCity"]?.value || "").trim();
 
-        // Basic validation (required fields)
         const missing = [];
         if (!name) missing.push("Name");
         if (!email) missing.push("Email");
@@ -159,13 +152,134 @@
           return;
         }
 
-        // Simulate success (no network)
         form.reset();
-        setNotice(
-          "success",
-          "Thank you. Your inquiry is received. We will respond within 1–2 business days with next steps."
-        );
+        setNotice("success", "Thank you. Your inquiry is received. We will respond within 1–2 business days with next steps.");
       });
     }
+
+    // -----------------------------
+    // Hyatt-style slider
+    // - Moves by measured slide width + gap (zoom-proof)
+    // - Updates caption + counter
+    // - Loops elegantly
+    // -----------------------------
+    const sliders = $$("[data-slider]");
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+    const getGapPx = (track) => {
+      const cs = getComputedStyle(track);
+      const g = cs.columnGap || cs.gap || "0px";
+      const n = parseFloat(g);
+      return Number.isFinite(n) ? n : 0;
+    };
+
+    const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+
+    sliders.forEach((root) => {
+      const track = $("[data-slider-track]", root);
+      const viewport = $("[data-slider-viewport]", root);
+      const slides = $$("[data-slide]", root);
+      const prevBtns = $$("[data-slider-prev]", root);
+      const nextBtns = $$("[data-slider-next]", root);
+
+      const outIndex = $("[data-slider-index]", root);
+      const outTotal = $("[data-slider-total]", root);
+
+      const caption = $("[data-slider-caption]", root);
+      const capTitle = $(".slider-caption-title", root);
+      const capSub = $(".slider-caption-sub", root);
+
+      if (!track || !viewport || slides.length === 0) return;
+
+      let idx = 0;
+      let animating = false;
+
+      const readMeta = (i) => {
+        const slide = slides[i];
+        const kicker = slide?.querySelector(".slide-kicker")?.textContent?.trim() || "Showcase";
+        const title = slide?.querySelector(".slide-title")?.textContent?.trim() || "Signature reveal";
+        return { kicker, title };
+      };
+
+      const setOutputs = () => {
+        if (outTotal) outTotal.textContent = String(slides.length);
+        if (outIndex) outIndex.textContent = String(idx + 1);
+
+        if (caption && capTitle && capSub) {
+          const m = readMeta(idx);
+          capTitle.textContent = m.kicker;
+          capSub.textContent = m.title;
+        }
+      };
+
+      const measureStep = () => {
+        // The step is one slide width + computed gap.
+        // Using getBoundingClientRect makes it resilient to browser zoom.
+        const first = slides[0];
+        const r = first.getBoundingClientRect();
+        const gap = getGapPx(track);
+        return r.width + gap;
+      };
+
+      const applyTransform = (immediate = false) => {
+        const step = measureStep();
+        const x = -(idx * step);
+
+        if (prefersReduced || immediate) {
+          track.style.transition = "none";
+          track.style.transform = `translate3d(${x}px,0,0)`;
+          // restore transitions for future clicks
+          requestAnimationFrame(() => {
+            track.style.transition = "";
+          });
+          return;
+        }
+
+        track.style.transition = "transform 820ms cubic-bezier(.22,.9,.2,1)";
+        track.style.transform = `translate3d(${x}px,0,0)`;
+      };
+
+      const go = (dir) => {
+        if (animating) return;
+        animating = true;
+
+        idx = (dir === 1) ? (idx + 1) : (idx - 1);
+        if (idx < 0) idx = slides.length - 1;
+        if (idx > slides.length - 1) idx = 0;
+
+        setOutputs();
+        applyTransform(false);
+
+        // release after transition
+        const done = () => {
+          animating = false;
+          track.removeEventListener("transitionend", done);
+        };
+        track.addEventListener("transitionend", done, { once: true });
+
+        // safety release
+        window.setTimeout(() => { animating = false; }, 900);
+      };
+
+      // Buttons
+      prevBtns.forEach((b) => b.addEventListener("click", (e) => { e.preventDefault(); go(-1); }));
+      nextBtns.forEach((b) => b.addEventListener("click", (e) => { e.preventDefault(); go(1); }));
+
+      // Keyboard
+      root.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") go(-1);
+        if (e.key === "ArrowRight") go(1);
+      });
+      root.setAttribute("tabindex", "0");
+
+      // Resize (keep alignment perfect across zoom + responsive changes)
+      const onResize = () => applyTransform(true);
+      window.addEventListener("resize", onResize, { passive: true });
+
+      // Init
+      idx = clamp(idx, 0, slides.length - 1);
+      setOutputs();
+      applyTransform(true);
+    });
   });
 })();
