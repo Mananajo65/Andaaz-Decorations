@@ -1,6 +1,6 @@
 /* assets/css/styles.css
    Andaaz Decorations — luxury hospitality aesthetic (dark + ivory + maroon/gold)
-   Update: wider canvas + fluid type + premium vignette/texture so it stays elegant when zoomed out
+   Update: fluid wide canvas + full-bleed hero/bands so it stays “hotel-grade” when zoomed out
 */
 
 :root{
@@ -23,14 +23,16 @@
   --shadow: 0 22px 60px rgba(0,0,0,.55);
   --shadow2: 0 10px 24px rgba(0,0,0,.30);
 
-  /* Wider “hotel-grade” canvas */
-  --max: 1320px;
+  /* Key change:
+     Instead of a hard cap (e.g., 1320px), we let the layout breathe on large screens.
+     This is what prevents the “tiny centered site” effect when zoomed out. */
+  --max: min(1680px, 92vw);
 
   /* Fluid type scale */
-  --h1: clamp(38px, 3.6vw, 64px);
-  --h2: clamp(26px, 2.3vw, 36px);
+  --h1: clamp(40px, 3.2vw, 66px);
+  --h2: clamp(26px, 2.2vw, 38px);
   --h3: clamp(16px, 1.25vw, 18px);
-  --lead: clamp(15px, 1.1vw, 17px);
+  --lead: clamp(15px, 1.1vw, 18px);
   --body: 15px;
 }
 
@@ -74,7 +76,6 @@ body::after{
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  /* ultra subtle “linen” texture */
   background:
     repeating-linear-gradient(
       45deg,
@@ -117,12 +118,19 @@ header, main, footer { position: relative; z-index: 1; }
 .container{
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 26px; /* slightly wider gutters for upscale feel */
+  padding: 0 clamp(18px, 2.2vw, 34px);
 }
-.section{padding: 64px 0}
+.section{padding: clamp(56px, 6vw, 84px) 0}
 .hr{height:1px;background:var(--line);margin: 22px 0}
 .stack{display:flex;flex-direction:column;gap: 12px}
 .row{display:flex;gap: 14px;flex-wrap:wrap;align-items:center}
+
+/* Optional section “band” backgrounds to read more like a hotel site */
+.section.band-bg{
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.00));
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
 
 /* Accessibility */
 .skip-link{
@@ -205,7 +213,7 @@ header{
 .btn.block{width:100%}
 
 /* Hero (Home) */
-.hero{padding: 52px 0 28px;}
+.hero{padding: clamp(34px, 4vw, 56px) 0 34px;}
 .hero-card{
   border-radius: var(--radius2);
   overflow:hidden;
@@ -213,7 +221,19 @@ header{
   box-shadow: var(--shadow);
   background: #0b0b0d;
 }
-.hero-media{position: relative; min-height: 560px;}
+
+/* Key change:
+   Make the hero “feel” more like a hotel site on desktop by bleeding slightly
+   beyond the container gutters (without changing your colorway). */
+@media (min-width: 1100px){
+  .hero-card{
+    width: calc(100% + (clamp(18px, 2.2vw, 34px) * 2));
+    margin-left: calc(clamp(18px, 2.2vw, 34px) * -1);
+    margin-right: calc(clamp(18px, 2.2vw, 34px) * -1);
+  }
+}
+
+.hero-media{position: relative; min-height: clamp(520px, 62vh, 720px);}
 .hero-media img{
   width:100%;
   height:100%;
@@ -225,16 +245,16 @@ header{
   position:absolute; inset:0;
   background:
     radial-gradient(circle at 30% 40%, var(--warm-overlay), transparent 55%),
-    linear-gradient(180deg, rgba(12,13,16,.08), rgba(12,13,16,.90));
+    linear-gradient(180deg, rgba(12,13,16,.08), rgba(12,13,16,.92));
 }
 .hero-copy{
   position:absolute; inset:0;
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
-  padding: clamp(22px, 2.4vw, 40px);
+  padding: clamp(22px, 2.4vw, 44px);
   gap: 14px;
-  max-width: 980px;
+  max-width: min(980px, 72vw);
 }
 .hero h1{margin:0; font-size: var(--h1); line-height: 1.03;}
 .hero p{margin:0; font-size: var(--lead); color: rgba(233,229,222,.84); max-width: 64ch;}
@@ -260,7 +280,17 @@ header{
   box-shadow: var(--shadow2);
   padding: 24px;
 }
-.page-hero h1{margin:0; font-size: clamp(30px, 2.6vw, 44px); line-height: 1.12;}
+
+/* Same “desktop bleed” treatment so inner pages also read upscale when zoomed out */
+@media (min-width: 1100px){
+  .page-hero .wrap{
+    width: calc(100% + (clamp(18px, 2.2vw, 34px) * 2));
+    margin-left: calc(clamp(18px, 2.2vw, 34px) * -1);
+    margin-right: calc(clamp(18px, 2.2vw, 34px) * -1);
+  }
+}
+
+.page-hero h1{margin:0; font-size: clamp(30px, 2.5vw, 46px); line-height: 1.12;}
 .page-hero p{margin:10px 0 0; color: rgba(233,229,222,.80); max-width: 80ch}
 
 /* Cards + grids */
@@ -309,7 +339,19 @@ header{
   gap: 16px;
   box-shadow: var(--shadow2);
 }
-.band h3{margin:0; font-size: clamp(20px, 1.6vw, 24px)}
+
+/* Make CTA band feel more “wide” on desktop as well */
+@media (min-width: 1100px){
+  .band{
+    width: calc(100% + (clamp(18px, 2.2vw, 34px) * 2));
+    margin-left: calc(clamp(18px, 2.2vw, 34px) * -1);
+    margin-right: calc(clamp(18px, 2.2vw, 34px) * -1);
+    padding-left: clamp(18px, 2.2vw, 34px);
+    padding-right: clamp(18px, 2.2vw, 34px);
+  }
+}
+
+.band h3{margin:0; font-size: clamp(20px, 1.6vw, 26px)}
 .band p{margin:6px 0 0; color: rgba(233,229,222,.78)}
 
 /* Services: anchors + timeline */
@@ -381,7 +423,7 @@ header{
   overflow:hidden;
 }
 .tile-media{
-  height: 170px;
+  height: 190px;
   background:
     radial-gradient(circle at 25% 25%, rgba(199,162,74,.18), transparent 55%),
     linear-gradient(180deg, rgba(255,255,255,.06), rgba(12,13,16,.55));
@@ -479,6 +521,15 @@ footer{
   .gallery-grid{grid-template-columns: 1fr}
   .values{grid-template-columns: 1fr}
   .form-grid{grid-template-columns: 1fr}
+
+  /* Undo desktop bleed on small screens (keep clean gutters) */
+  .hero-card,
+  .page-hero .wrap,
+  .band{
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+  }
 
   /* panel exists for animation */
   .mobile-panel{
