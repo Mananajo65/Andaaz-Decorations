@@ -1,5 +1,5 @@
 // assets/js/main.js
-// Andaaz Decorations — mobile toggle + active nav + footer year + gallery filter + inquiry form + Hyatt-style slider
+// Andaaz Decorations — mobile toggle + active nav + footer year + gallery filter + inquiry form + Hyatt-style paged slider
 (function () {
   const ready = (fn) => {
     if (document.readyState === "loading") {
@@ -53,8 +53,6 @@
         if (toggle.contains(e.target) || panel.contains(e.target)) return;
         closeMenu();
       });
-    } else {
-      console.warn("Mobile menu not wired: missing toggle or panel.", { toggle, panel });
     }
 
     // -----------------------------
@@ -104,7 +102,8 @@
         });
       });
 
-      const first = buttons.find((b) => (b.getAttribute("data-filter") || "").toLowerCase() === "all") || buttons[0];
+      const first =
+        buttons.find((b) => (b.getAttribute("data-filter") || "").toLowerCase() === "all") || buttons[0];
       if (first) {
         setActive(first);
         applyFilter(first.getAttribute("data-filter"));
@@ -158,16 +157,16 @@
     }
 
     // -----------------------------
-    // Hyatt-style slider
-    // - Moves by measured slide width + gap (zoom-proof)
-    // - Updates caption + counter
-    // - Loops elegantly
+    // Hyatt-style slider (paged)
+    // Why this fixes it:
+    // - Instead of moving 1 card, we move a full "page" (cards visible in viewport)
+    // - Movement is computed from actual DOM measurements -> zoom-proof
     // -----------------------------
-    const sliders = $$("[data-slider]");
     const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    const sliders = $$("[data-slider]");
 
-    const getGapPx = (track) => {
-      const cs = getComputedStyle(track);
+    const getGapPx = (el) => {
+      const cs = getComputedStyle(el);
       const g = cs.columnGap || cs.gap || "0px";
       const n = parseFloat(g);
       return Number.isFinite(n) ? n : 0;
@@ -185,14 +184,15 @@
       const outIndex = $("[data-slider-index]", root);
       const outTotal = $("[data-slider-total]", root);
 
-      const caption = $("[data-slider-caption]", root);
       const capTitle = $(".slider-caption-title", root);
       const capSub = $(".slider-caption-sub", root);
 
       if (!track || !viewport || slides.length === 0) return;
 
-      let idx = 0;
+      let page = 0;
       let animating = false;
+      let perPage = 1;
+      let pages = 1;
 
       const readMeta = (i) => {
         const slide = slides[i];
@@ -201,41 +201,60 @@
         return { kicker, title };
       };
 
+      const measure = () => {
+        const gap = getGapPx(track);
+
+        // Slide width from the first slide card (includes responsive/zoom scaling)
+        const r = slides[0].getBoundingClientRect();
+        const step = r.width + gap;
+
+        // Viewport width (what’s actually visible)
+        const vw = viewport.getBoundingClientRect().width;
+
+        // How many slides fit fully in viewport (at this zoom)
+        // +gap gives a stable threshold.
+        perPage = Math.max(1, Math.floor((vw + gap) / step));
+
+        // Total pages
+        pages = Math.max(1, Math.ceil(slides.length / perPage));
+
+        // Clamp page if resizing changed page count
+        page = clamp(page, 0, pages - 1);
+
+        return { step, vw, gap };
+      };
+
+      const activeIndex = () => clamp(page * perPage, 0, slides.length - 1);
+
       const setOutputs = () => {
         if (outTotal) outTotal.textContent = String(slides.length);
+
+        const idx = activeIndex();
         if (outIndex) outIndex.textContent = String(idx + 1);
 
-        if (caption && capTitle && capSub) {
+        if (capTitle && capSub) {
           const m = readMeta(idx);
           capTitle.textContent = m.kicker;
           capSub.textContent = m.title;
         }
       };
 
-      const measureStep = () => {
-        // The step is one slide width + computed gap.
-        // Using getBoundingClientRect makes it resilient to browser zoom.
-        const first = slides[0];
-        const r = first.getBoundingClientRect();
-        const gap = getGapPx(track);
-        return r.width + gap;
-      };
-
       const applyTransform = (immediate = false) => {
-        const step = measureStep();
+        const { step } = measure();
+        const idx = activeIndex();
         const x = -(idx * step);
 
         if (prefersReduced || immediate) {
           track.style.transition = "none";
           track.style.transform = `translate3d(${x}px,0,0)`;
-          // restore transitions for future clicks
           requestAnimationFrame(() => {
             track.style.transition = "";
           });
           return;
         }
 
-        track.style.transition = "transform 820ms cubic-bezier(.22,.9,.2,1)";
+        // Hyatt-like smooth, weighty glide
+        track.style.transition = "transform 900ms cubic-bezier(.22,.9,.2,1)";
         track.style.transform = `translate3d(${x}px,0,0)`;
       };
 
@@ -243,41 +262,61 @@
         if (animating) return;
         animating = true;
 
-        idx = (dir === 1) ? (idx + 1) : (idx - 1);
-        if (idx < 0) idx = slides.length - 1;
-        if (idx > slides.length - 1) idx = 0;
+        // Re-measure before moving so perPage stays correct at any zoom
+        measure();
+
+        if (dir === 1) page += 1;
+        else page -= 1;
+
+        // Loop pages
+        if (page < 0) page = pages - 1;
+        if (page > pages - 1) page = 0;
 
         setOutputs();
         applyTransform(false);
 
-        // release after transition
         const done = () => {
           animating = false;
           track.removeEventListener("transitionend", done);
         };
         track.addEventListener("transitionend", done, { once: true });
 
-        // safety release
-        window.setTimeout(() => { animating = false; }, 900);
+        window.setTimeout(() => {
+          animating = false;
+        }, 980);
       };
 
       // Buttons
-      prevBtns.forEach((b) => b.addEventListener("click", (e) => { e.preventDefault(); go(-1); }));
-      nextBtns.forEach((b) => b.addEventListener("click", (e) => { e.preventDefault(); go(1); }));
+      prevBtns.forEach((b) =>
+        b.addEventListener("click", (e) => {
+          e.preventDefault();
+          go(-1);
+        })
+      );
+      nextBtns.forEach((b) =>
+        b.addEventListener("click", (e) => {
+          e.preventDefault();
+          go(1);
+        })
+      );
 
-      // Keyboard
+      // Keyboard focus + controls
       root.addEventListener("keydown", (e) => {
         if (e.key === "ArrowLeft") go(-1);
         if (e.key === "ArrowRight") go(1);
       });
       root.setAttribute("tabindex", "0");
 
-      // Resize (keep alignment perfect across zoom + responsive changes)
-      const onResize = () => applyTransform(true);
+      // Resize/zoom recalibration
+      const onResize = () => {
+        measure();
+        setOutputs();
+        applyTransform(true);
+      };
       window.addEventListener("resize", onResize, { passive: true });
 
       // Init
-      idx = clamp(idx, 0, slides.length - 1);
+      measure();
       setOutputs();
       applyTransform(true);
     });
