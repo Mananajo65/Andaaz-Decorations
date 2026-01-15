@@ -1,6 +1,11 @@
 /* assets/css/styles.css
    Andaaz Decorations — luxury hospitality aesthetic (dark + ivory + maroon/gold)
-   Fix: ensure FULL wide logo displays AND nav does not disappear on typical laptop widths.
+
+   Header + Logo Fix (Unified):
+   - Uses .site-header + .nav-wrap + .nav + .nav-toggle (matches all pages + main.js)
+   - Full logo image supported via .brand-logo (controlled height + max-width)
+   - Prevents logo from stretching layout or pushing nav off-screen
+   - Keeps existing Hyatt slider + site styling intact
 */
 
 :root{
@@ -23,7 +28,8 @@
   --shadow: 0 22px 60px rgba(0,0,0,.55);
   --shadow2: 0 10px 24px rgba(0,0,0,.30);
 
-  --max: 1320px;
+  /* fluid max width */
+  --max: clamp(1080px, 92vw, 1560px);
 
   --h1: clamp(38px, 3.6vw, 64px);
   --h2: clamp(26px, 2.3vw, 36px);
@@ -41,7 +47,7 @@ button,input,select,textarea{font:inherit}
 ::selection{background: rgba(199,162,74,.25)}
 :focus-visible{outline: 2px solid var(--gold); outline-offset: 3px}
 
-/* Typography */
+/* Typography + background */
 body{
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   color: var(--ink);
@@ -71,12 +77,13 @@ body::before{
   inset: 0;
   pointer-events: none;
   z-index: 0;
+
   background:
     radial-gradient(1200px 900px at 18% 10%, rgba(199,162,74,.10), transparent 60%),
     radial-gradient(1100px 860px at 88% 18%, rgba(91,11,31,.20), transparent 62%),
     radial-gradient(1200px 900px at 50% 92%, rgba(0,0,0,.55), transparent 60%),
     linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.62));
-  opacity: 1;
+
   mix-blend-mode: multiply;
 }
 
@@ -87,6 +94,7 @@ body::after{
   inset: 0;
   pointer-events: none;
   z-index: 0;
+
   background:
     radial-gradient(circle at 15% 25%, rgba(255,255,255,.04), transparent 35%),
     radial-gradient(circle at 80% 20%, rgba(255,255,255,.03), transparent 40%),
@@ -97,6 +105,7 @@ body::after{
       transparent 2px,
       transparent 4px
     );
+
   opacity: .10;
   mix-blend-mode: overlay;
 }
@@ -111,27 +120,12 @@ header, main, footer { position: relative; z-index: 1; }
 .muted{color: var(--muted)}
 .small{font-size: 13px; color: rgba(233,229,222,.70)}
 .lead{font-size: var(--lead); color: rgba(233,229,222,.84); max-width: 76ch}
-.kicker{
-  display:inline-flex;
-  align-items:center;
-  gap: 10px;
-  font-size: 12px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(233,229,222,.78);
-}
-.kicker-dot{
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 0 4px rgba(199,162,74,.16);
-}
 
 /* Layout */
 .container{
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 26px;
+  padding: 0 clamp(18px, 2vw, 30px);
 }
 .section{padding: 64px 0}
 .hr{height:1px;background:var(--line);margin: 22px 0}
@@ -160,8 +154,10 @@ header, main, footer { position: relative; z-index: 1; }
   border:0;
 }
 
-/* Header */
-header{
+/* =========================================
+   HEADER (Unified: site-header system)
+========================================= */
+.site-header{
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -170,26 +166,33 @@ header{
   border-bottom: 1px solid rgba(255,255,255,.10);
 }
 
-/* Keep header stable and prevent wrap-induced weirdness */
-.navbar{
+.nav-wrap{
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding: 18px 0;
   gap: 16px;
-  flex-wrap: nowrap; /* critical */
+  flex-wrap: nowrap;
 }
 
-/* Brand container: can shrink before it breaks nav */
 .brand{
   display:flex;
   align-items:center;
-  gap: 12px;
-  min-width: 0;    /* critical */
-  flex: 0 1 auto;  /* critical */
+  min-width: 0;
+  flex: 0 1 auto;
 }
 
-/* Legacy square mark (footer may still use this) */
+/* Full logo image (your assets/img/andaaz-logo.png) */
+.brand-logo{
+  height: 44px;
+  width: auto;
+  max-width: 360px;
+  object-fit: contain;
+  display:block;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+}
+
+/* Optional legacy mark support (used in footer in your pages) */
 .brand-mark{
   width: 36px; height: 36px;
   border-radius: 12px;
@@ -197,60 +200,66 @@ header{
   box-shadow: var(--shadow2);
 }
 
-/* Full (wide) logo in header: never crop, never distort, never bully nav */
-.brand-logo-full{
-  height: 34px;        /* slightly larger so it reads premium */
-  width: auto;
-  max-width: 260px;    /* protects nav */
-  object-fit: contain; /* no cropping */
-  display:block;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-}
-
-/* Optional: if you ever use a square image logo */
-.brand-logo{
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  object-fit: cover;
-  display:block;
-  box-shadow: var(--shadow2);
-  background: radial-gradient(circle at 30% 30%, rgba(199,162,74,.35), rgba(91,11,31,.22));
-  border: 1px solid rgba(255,255,255,.10);
-}
-
-.brand-stack{
-  display:flex;
-  flex-direction:column;
-  line-height:1.05;
-  min-width:0;
-}
+.brand-stack{display:flex;flex-direction:column;line-height:1.05;min-width:0}
 .brand-name{font-size: 16px; font-weight: 650;}
 .brand-tag{font-size: 12px; color: rgba(233,229,222,.68);}
 
-/* Nav: stable, aligned right, never wraps */
-.navlinks{
+.nav{
   display:flex;
   align-items:center;
   gap: 16px;
   justify-content:flex-end;
   flex: 1 1 auto;
   min-width: 0;
-  white-space: nowrap; /* critical */
+  white-space: nowrap;
 }
-.navlinks a{
+
+.nav-link{
   font-size: 13px;
   color: rgba(233,229,222,.88);
   padding: 10px 10px;
   border-radius: 14px;
 }
-.navlinks a:hover{background: rgba(255,255,255,.06)}
-.navlinks a.active{background: rgba(199,162,74,.14)}
+.nav-link:hover{background: rgba(255,255,255,.06)}
+.nav-link.is-active{background: rgba(199,162,74,.14)}
 
-/* Mobile toggle defaults */
-.mobile-toggle{display:none}
+.nav-cta{
+  padding: 11px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(199,162,74,.55);
+  background: linear-gradient(135deg, rgba(91,11,31,.95), rgba(199,162,74,.30));
+  color: rgba(233,229,222,.96);
+  font-weight: 750;
+}
+.nav-cta:hover{border-color: rgba(199,162,74,.85)}
 
-/* Buttons */
+/* Hamburger toggle */
+.nav-toggle{
+  display:none;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  cursor:pointer;
+  padding: 10px;
+}
+.nav-toggle span{
+  display:block;
+  height: 2px;
+  background: rgba(233,229,222,.90);
+  border-radius: 2px;
+  margin: 5px 0;
+}
+
+/* Mobile menu (JS toggles .site-header.is-open) */
+.site-header.is-open .nav{
+  display:flex;
+}
+
+/* =========================================
+   Buttons
+========================================= */
 .btn{
   display:inline-flex;
   align-items:center;
@@ -279,7 +288,23 @@ header{
 .btn.ghost{background: transparent}
 .btn.block{width:100%}
 
-/* Hero (Home) */
+/* Hero */
+.kicker{
+  display:inline-flex;
+  align-items:center;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(233,229,222,.78);
+}
+.kicker-dot{
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(199,162,74,.16);
+}
+
 .hero{padding: 52px 0 28px;}
 .hero-card{
   border-radius: var(--radius2);
@@ -288,7 +313,7 @@ header{
   box-shadow: var(--shadow);
   background: #0b0b0d;
 }
-.hero-media{position: relative; min-height: 560px;}
+.hero-media{position: relative; min-height: clamp(520px, 52vw, 620px);}
 .hero-media img{
   width:100%;
   height:100%;
@@ -324,7 +349,7 @@ header{
   color: rgba(233,229,222,.78);
 }
 
-/* Page hero (inner pages) */
+/* Page hero */
 .page-hero{padding: 30px 0 10px;}
 .page-hero .wrap{
   border-radius: var(--radius2);
@@ -387,124 +412,152 @@ header{
 .band h3{margin:0; font-size: clamp(20px, 1.6vw, 24px)}
 .band p{margin:6px 0 0; color: rgba(233,229,222,.78)}
 
-/* Services: anchors + timeline */
-.anchor-row{display:flex; gap: 10px; flex-wrap:wrap; margin-top: 12px;}
-.pill-link{
-  display:inline-flex;
-  align-items:center;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.04);
-  color: rgba(233,229,222,.86);
-  font-size: 13px;
-}
-.pill-link:hover{background: rgba(255,255,255,.08)}
-.timeline{
-  border-radius: var(--radius2);
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.03);
-  padding: 18px;
-}
-.timeline-steps{
-  display:grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-}
-.step{
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.04);
-  padding: 14px;
-}
-.step strong{display:block; font-size: 13px}
-.step span{display:block; margin-top:6px; font-size: 13px; color: rgba(233,229,222,.74)}
+/* ================================
+   HYATT-STYLE TABS / SLIDER
+================================== */
+.hyatt-wrap{ padding: 40px 0 0; }
 
-/* Gallery */
-.filters{display:flex; gap: 10px; flex-wrap:wrap; margin: 14px 0 18px;}
-.filter-btn{
-  padding: 10px 12px;
-  border-radius: 999px;
+.hyatt-top{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap: 16px;
+  margin: 16px 0 12px;
+}
+.hyatt-top h2{margin:0; font-size: var(--h2);}
+.hyatt-top .sub{margin-top: 8px}
+
+.hyatt-tabs{
+  display:flex;
+  gap: 10px;
+  flex-wrap:wrap;
+  margin: 12px 0 14px;
+}
+
+.hyatt-tab{
+  appearance:none;
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.04);
   color: rgba(233,229,222,.86);
   font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 999px;
   cursor:pointer;
+  transition: background .2s ease, border-color .2s ease, transform .08s ease;
 }
-.filter-btn:hover{background: rgba(255,255,255,.08)}
-.filter-btn[aria-pressed="true"]{
+.hyatt-tab:hover{background: rgba(255,255,255,.08)}
+.hyatt-tab:active{transform: translateY(1px)}
+.hyatt-tab[aria-selected="true"]{
   border-color: rgba(199,162,74,.55);
   background: rgba(199,162,74,.12);
+  color: rgba(233,229,222,.96);
 }
-.gallery-grid{display:grid; gap: 14px; grid-template-columns: repeat(3, 1fr);}
-.tile{
-  border-radius: var(--radius2);
-  border: 1px solid rgba(255,255,255,.12);
-  background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(91,11,31,.10));
-  box-shadow: 0 10px 26px rgba(0,0,0,.24);
-  overflow:hidden;
-}
-.tile-media{
-  height: 170px;
-  background:
-    radial-gradient(circle at 25% 25%, rgba(199,162,74,.18), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(12,13,16,.55));
-}
-.tile-body{padding: 14px}
-.tile-title{margin:0; font-size: 15px}
-.tile-desc{margin:8px 0 0; font-size: 13px; color: rgba(233,229,222,.74)}
 
-/* About */
-.values{display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px;}
-.value{
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.04);
-  padding: 14px;
-}
-.value strong{display:block; font-size: 13px}
-.value span{display:block; margin-top:6px; font-size: 13px; color: rgba(233,229,222,.74)}
-.bullets{margin: 0; padding-left: 18px; color: rgba(233,229,222,.78)}
-.bullets li{margin: 8px 0}
-
-/* Forms */
-.form{
+.hyatt-shell{
+  position: relative;
   border-radius: var(--radius2);
   border: 1px solid rgba(255,255,255,.12);
   background: rgba(255,255,255,.03);
-  box-shadow: 0 10px 26px rgba(0,0,0,.24);
-  padding: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.28);
+  overflow:hidden;
 }
-.form-grid{display:grid; grid-template-columns: repeat(2, 1fr); gap: 14px;}
-.field{display:flex;flex-direction:column;gap: 8px}
-label{font-size: 13px; color: rgba(233,229,222,.86)}
-input,select,textarea{
-  border-radius: 14px;
+
+.hyatt-viewport{ overflow:hidden; }
+
+.hyatt-track{
+  display:flex;
+  gap: 14px;
+  padding: 14px;
+  transform: translate3d(0,0,0);
+}
+
+.hyatt-slide{
+  flex: 0 0 auto;
+  width: min(360px, 86vw);
+}
+
+.hyatt-card{
+  display:block;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(91,11,31,.10));
+  overflow:hidden;
+  box-shadow: 0 10px 26px rgba(0,0,0,.24);
+}
+
+.hyatt-media{
+  height: 210px;
+  overflow:hidden;
+  background: rgba(255,255,255,.03);
+}
+.hyatt-media img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  opacity: .98;
+  transform: scale(1.01);
+}
+
+.hyatt-meta{ padding: 12px 14px 14px; }
+.slide-kicker{
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(233,229,222,.68);
+}
+.slide-title{
+  margin-top: 6px;
+  font-size: 16px;
+  color: rgba(233,229,222,.95);
+}
+
+.hyatt-arrow{
+  position:absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(12,13,16,.65);
+  color: rgba(233,229,222,.95);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow: 0 12px 26px rgba(0,0,0,.35);
+}
+.hyatt-arrow:hover{background: rgba(12,13,16,.78)}
+.hyatt-prev{left: 12px}
+.hyatt-next{right: 12px}
+
+.hyatt-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 10px 14px 14px;
+  border-top: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.10);
+}
+.hyatt-label{ font-size: 13px; color: rgba(233,229,222,.78); }
+.hyatt-controls{ display:flex; align-items:center; gap: 10px; }
+.hyatt-mini{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.05);
   color: rgba(233,229,222,.92);
-  padding: 12px 12px;
-  outline: none;
+  cursor:pointer;
 }
-textarea{min-height: 120px; resize: vertical}
-.help{font-size: 12px; color: rgba(233,229,222,.68)}
-.notice{
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.04);
-  padding: 12px 14px;
-  margin-bottom: 14px;
+.hyatt-mini:hover{background: rgba(255,255,255,.10)}
+.hyatt-count{
+  font-size: 12px;
+  color: rgba(233,229,222,.70);
+  min-width: 56px;
+  text-align:center;
 }
-.notice.is-success{
-  border-color: rgba(199,162,74,.40);
-  background: rgba(199,162,74,.10);
-}
-.notice.is-error{
-  border-color: rgba(255,255,255,.18);
-  background: rgba(91,11,31,.18);
-}
-.notice[hidden]{display:none}
 
 /* Footer */
 footer{
@@ -520,88 +573,45 @@ footer{
 .footer-grid a{color: rgba(233,229,222,.78)}
 .footer-grid a:hover{text-decoration: underline}
 
-/* Mobile menu (default hidden) */
-.mobile-panel{display:none;}
-
 /* ================================
-   RESPONSIVE BREAKPOINTS (FIXED)
-   Keep nav visible down to 760px.
-   Only then switch to mobile menu.
+   RESPONSIVE
 ================================== */
-
 @media (max-width: 980px){
-  /* Keep desktop nav visible at typical laptop widths */
-  .navlinks{display:flex;}
-  .mobile-toggle{display:none;}
-  .mobile-panel{display:none;}
-
-  .hero-media{min-height: 480px}
+  .cols-3,.cols-2{grid-template-columns: 1fr}
   .band{flex-direction:column; align-items:flex-start}
   .footer-grid{grid-template-columns: 1fr}
 
-  .timeline-steps{grid-template-columns: 1fr}
-  .gallery-grid{grid-template-columns: 1fr}
-  .values{grid-template-columns: 1fr}
-  .form-grid{grid-template-columns: 1fr}
-
-  /* Logo remains tidy */
-  .brand-logo-full{
-    height: 32px;
-    max-width: 240px;
+  /* Reduce logo size on smaller screens */
+  .brand-logo{
+    height: 36px;
+    max-width: 280px;
   }
 }
 
-/* Collapse nav only on small screens */
 @media (max-width: 760px){
-  .cols-3,.cols-2{grid-template-columns: 1fr}
+  /* Collapse nav into hamburger */
+  .nav{display:none}
+  .nav-toggle{display:inline-block}
 
-  .navlinks{display:none}
-  .mobile-toggle{display:inline-flex}
-
-  /* panel exists for animation */
-  .mobile-panel{
-    display:block;
-    will-change: max-height, opacity, transform;
+  .site-header.is-open .nav{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap: 10px;
+    padding: 12px 0 16px;
   }
 
-  /* Closed */
-  .mobile-panel[aria-hidden="true"]{
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    pointer-events: none;
-    transform: translateY(-6px);
-    border-top: none;
-    padding: 0;
-    transition: max-height .25s ease, opacity .18s ease, transform .25s ease;
-  }
-
-  /* Open */
-  .mobile-panel[aria-hidden="false"]{
-    max-height: 420px;
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-    border-top: 1px solid var(--line);
-    padding: 14px 0 18px;
-    transition: max-height .28s ease, opacity .20s ease, transform .28s ease;
-  }
-
-  /* Links */
-  .mobile-panel a{
-    display:block;
-    padding: 12px 10px;
-    border-radius: 14px;
-    color: rgba(233,229,222,.92);
+  .nav-link{
     background: rgba(255,255,255,.04);
     border: 1px solid rgba(255,255,255,.10);
-    margin: 10px 0;
+    padding: 12px 12px;
   }
-  .mobile-panel a:hover{background: rgba(255,255,255,.08)}
 
-  /* Logo compact on small screens */
-  .brand-logo-full{
-    height: 26px;
-    max-width: 200px;
+  .brand-logo{
+    height: 30px;
+    max-width: 220px;
   }
+
+  .hyatt-slide{width: 86vw}
+  .hyatt-arrow{display:none}
 }
