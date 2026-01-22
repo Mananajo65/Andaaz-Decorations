@@ -1,10 +1,11 @@
+<!-- contact.html (FULL REWRITE — Apple-Style Live Weather Card Integrated into Your Current File) -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact | Andaaz Decorations</title>
-  <meta name="description" content="Contact Andaaz Decorations — start an inquiry for luxury wedding décor and event production." />
+  <title>Inquiry | Andaaz Decorations</title>
+  <meta name="description" content="Submit an inquiry to Andaaz Decorations for luxury wedding décor and production." />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 
@@ -14,10 +15,10 @@
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="index.html" aria-label="Andaaz Decorations home">
-        <span class="brand-mark"></span>
+        <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-text">
           <span class="brand-name">Andaaz Decorations</span>
-          <span class="brand-tag">Luxury Wedding Décor & Production</span>
+          <span class="brand-tag">Luxury Wedding Décor and Production</span>
         </span>
       </a>
 
@@ -26,7 +27,7 @@
         <a href="services.html" class="nav-link">Services</a>
         <a href="gallery.html" class="nav-link">Gallery</a>
         <a href="about.html" class="nav-link">About</a>
-        <a href="contact.html" class="nav-link nav-cta is-active">Inquire</a>
+        <a href="contact.html" class="nav-link nav-cta is-active">Inquiry</a>
       </nav>
 
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
@@ -38,92 +39,948 @@
   <main id="content">
     <section class="page-hero">
       <div class="container">
-        <p class="kicker">Contact</p>
-        <h1>Start an inquiry</h1>
+        <p class="kicker">Inquiry</p>
+        <h1>Begin your consultation</h1>
         <p class="lead muted">
-          Share your date, venue, and vibe. We’ll respond with next steps and a clear plan.
+          Share the essentials below. We review personally and respond with next steps.
         </p>
       </div>
     </section>
 
     <section class="section">
-      <div class="container two-col">
-        <div class="panel">
-          <h2>Inquiry form</h2>
-          <p class="muted">This form is a front-end template. Connect it to your preferred email/form service when ready.</p>
-
-          <form class="form" action="#" method="post">
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" required />
+      <div class="container">
+        <div class="inquiry-shell">
+          <div class="inquiry-head">
+            <div>
+              <h2 class="serif">Request</h2>
+              <p class="muted">
+                This form opens your email client with a labeled summary. File uploads are collected for future integration and are not attached to the email—please include share links when needed.
+              </p>
             </div>
 
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required />
+            <div class="inquiry-badges" aria-label="Expectations">
+              <span class="pill">Response within 24 to 48 hours</span>
+              <span class="pill">Hospitality grade execution</span>
             </div>
-
-            <div class="field">
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel" />
-            </div>
-
-            <div class="field">
-              <label for="date">Event date</label>
-              <input id="date" name="date" type="date" />
-            </div>
-
-            <div class="field">
-              <label for="venue">Venue</label>
-              <input id="venue" name="venue" type="text" />
-            </div>
-
-            <div class="field">
-              <label for="notes">Tell us about your vision</label>
-              <textarea id="notes" name="notes" rows="5" placeholder="Colors, style references, cultural elements, guest count, and what matters most."></textarea>
-            </div>
-
-            <button class="btn btn-primary" type="submit">Send inquiry</button>
-          </form>
-        </div>
-
-        <aside class="panel">
-          <h3>What to include</h3>
-          <ul class="checklist">
-            <li>Date + venue</li>
-            <li>Events (Mehndi, Sangeet, Ceremony, Reception)</li>
-            <li>Palette + inspiration</li>
-            <li>Guest count + room layout (if available)</li>
-            <li>What you want to feel when you walk in</li>
-          </ul>
-
-          <div class="panel-cta">
-            <a class="btn btn-ghost" href="gallery.html">View gallery</a>
-            <a class="btn btn-ghost" href="services.html">See services</a>
           </div>
-        </aside>
+
+          <!-- GRID: FORM + WEATHER (Process removed from right column; moved below) -->
+          <div class="two-col inquiry-grid" style="grid-template-columns: 1.65fr 1fr;">
+            <!-- LEFT: FORM -->
+            <div class="panel panel-strong">
+              <form class="form" id="inquiryForm" action="#" method="post" enctype="multipart/form-data" novalidate>
+
+                <!-- CLIENT -->
+                <div class="mini-card" style="margin-top: 6px;">
+                  <div class="mini-title">Client</div>
+                  <div class="mini-text muted">Contact details for planning and follow-up.</div>
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="firstName">First name</label>
+                    <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="First name" required />
+                  </div>
+
+                  <div class="field">
+                    <label for="lastName">Last name</label>
+                    <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Last name" required />
+                  </div>
+                </div>
+
+                <!-- Phone & Numbering Plan -->
+                <div class="form-row">
+                  <div class="field">
+                    <label for="plan">Numbering plan</label>
+                    <select id="plan" name="plan" data-plan required>
+                      <option value="+1 United States" selected>+1 United States</option>
+
+                      <option value="+93 Afghanistan">+93 Afghanistan</option>
+                      <option value="+355 Albania">+355 Albania</option>
+                      <option value="+213 Algeria">+213 Algeria</option>
+                      <option value="+1 American Samoa">+1 American Samoa</option>
+                      <option value="+376 Andorra">+376 Andorra</option>
+                      <option value="+244 Angola">+244 Angola</option>
+                      <option value="+1 Anguilla">+1 Anguilla</option>
+                      <option value="+672 Antarctica">+672 Antarctica</option>
+                      <option value="+1 Antigua and Barbuda">+1 Antigua and Barbuda</option>
+                      <option value="+54 Argentina">+54 Argentina</option>
+                      <option value="+374 Armenia">+374 Armenia</option>
+                      <option value="+297 Aruba">+297 Aruba</option>
+                      <option value="+61 Australia">+61 Australia</option>
+                      <option value="+43 Austria">+43 Austria</option>
+                      <option value="+994 Azerbaijan">+994 Azerbaijan</option>
+                      <option value="+1 Bahamas">+1 Bahamas</option>
+                      <option value="+973 Bahrain">+973 Bahrain</option>
+                      <option value="+880 Bangladesh">+880 Bangladesh</option>
+                      <option value="+1 Barbados">+1 Barbados</option>
+                      <option value="+375 Belarus">+375 Belarus</option>
+                      <option value="+32 Belgium">+32 Belgium</option>
+                      <option value="+501 Belize">+501 Belize</option>
+                      <option value="+229 Benin">+229 Benin</option>
+                      <option value="+1 Bermuda">+1 Bermuda</option>
+                      <option value="+975 Bhutan">+975 Bhutan</option>
+                      <option value="+591 Bolivia">+591 Bolivia</option>
+                      <option value="+387 Bosnia and Herzegovina">+387 Bosnia and Herzegovina</option>
+                      <option value="+267 Botswana">+267 Botswana</option>
+                      <option value="+55 Brazil">+55 Brazil</option>
+                      <option value="+246 British Indian Ocean Territory">+246 British Indian Ocean Territory</option>
+                      <option value="+1 British Virgin Islands">+1 British Virgin Islands</option>
+                      <option value="+673 Brunei">+673 Brunei</option>
+                      <option value="+359 Bulgaria">+359 Bulgaria</option>
+                      <option value="+226 Burkina Faso">+226 Burkina Faso</option>
+                      <option value="+257 Burundi">+257 Burundi</option>
+                      <option value="+855 Cambodia">+855 Cambodia</option>
+                      <option value="+237 Cameroon">+237 Cameroon</option>
+                      <option value="+1 Canada">+1 Canada</option>
+                      <option value="+238 Cape Verde">+238 Cape Verde</option>
+                      <option value="+1 Cayman Islands">+1 Cayman Islands</option>
+                      <option value="+236 Central African Republic">+236 Central African Republic</option>
+                      <option value="+235 Chad">+235 Chad</option>
+                      <option value="+56 Chile">+56 Chile</option>
+                      <option value="+86 China">+86 China</option>
+                      <option value="+61 Christmas Island">+61 Christmas Island</option>
+                      <option value="+61 Cocos Islands">+61 Cocos Islands</option>
+                      <option value="+57 Colombia">+57 Colombia</option>
+                      <option value="+269 Comoros">+269 Comoros</option>
+                      <option value="+242 Congo">+242 Congo</option>
+                      <option value="+243 Congo, Democratic Republic">+243 Congo, Democratic Republic</option>
+                      <option value="+682 Cook Islands">+682 Cook Islands</option>
+                      <option value="+506 Costa Rica">+506 Costa Rica</option>
+                      <option value="+225 Côte d’Ivoire">+225 Côte d’Ivoire</option>
+                      <option value="+385 Croatia">+385 Croatia</option>
+                      <option value="+53 Cuba">+53 Cuba</option>
+                      <option value="+599 Curaçao">+599 Curaçao</option>
+                      <option value="+357 Cyprus">+357 Cyprus</option>
+                      <option value="+420 Czechia">+420 Czechia</option>
+                      <option value="+45 Denmark">+45 Denmark</option>
+                      <option value="+253 Djibouti">+253 Djibouti</option>
+                      <option value="+1 Dominica">+1 Dominica</option>
+                      <option value="+1 Dominican Republic">+1 Dominican Republic</option>
+                      <option value="+670 East Timor">+670 East Timor</option>
+                      <option value="+593 Ecuador">+593 Ecuador</option>
+                      <option value="+20 Egypt">+20 Egypt</option>
+                      <option value="+503 El Salvador">+503 El Salvador</option>
+                      <option value="+240 Equatorial Guinea">+240 Equatorial Guinea</option>
+                      <option value="+291 Eritrea">+291 Eritrea</option>
+                      <option value="+372 Estonia">+372 Estonia</option>
+                      <option value="+268 Eswatini">+268 Eswatini</option>
+                      <option value="+251 Ethiopia">+251 Ethiopia</option>
+                      <option value="+500 Falkland Islands">+500 Falkland Islands</option>
+                      <option value="+298 Faroe Islands">+298 Faroe Islands</option>
+                      <option value="+679 Fiji">+679 Fiji</option>
+                      <option value="+358 Finland">+358 Finland</option>
+                      <option value="+33 France">+33 France</option>
+                      <option value="+594 French Guiana">+594 French Guiana</option>
+                      <option value="+689 French Polynesia">+689 French Polynesia</option>
+                      <option value="+241 Gabon">+241 Gabon</option>
+                      <option value="+220 Gambia">+220 Gambia</option>
+                      <option value="+995 Georgia">+995 Georgia</option>
+                      <option value="+49 Germany">+49 Germany</option>
+                      <option value="+233 Ghana">+233 Ghana</option>
+                      <option value="+350 Gibraltar">+350 Gibraltar</option>
+                      <option value="+30 Greece">+30 Greece</option>
+                      <option value="+299 Greenland">+299 Greenland</option>
+                      <option value="+1 Grenada">+1 Grenada</option>
+                      <option value="+590 Guadeloupe">+590 Guadeloupe</option>
+                      <option value="+1 Guam">+1 Guam</option>
+                      <option value="+502 Guatemala">+502 Guatemala</option>
+                      <option value="+44 Guernsey">+44 Guernsey</option>
+                      <option value="+224 Guinea">+224 Guinea</option>
+                      <option value="+245 Guinea-Bissau">+245 Guinea-Bissau</option>
+                      <option value="+592 Guyana">+592 Guyana</option>
+                      <option value="+509 Haiti">+509 Haiti</option>
+                      <option value="+504 Honduras">+504 Honduras</option>
+                      <option value="+852 Hong Kong">+852 Hong Kong</option>
+                      <option value="+36 Hungary">+36 Hungary</option>
+                      <option value="+354 Iceland">+354 Iceland</option>
+                      <option value="+91 India">+91 India</option>
+                      <option value="+62 Indonesia">+62 Indonesia</option>
+                      <option value="+98 Iran">+98 Iran</option>
+                      <option value="+964 Iraq">+964 Iraq</option>
+                      <option value="+353 Ireland">+353 Ireland</option>
+                      <option value="+44 Isle of Man">+44 Isle of Man</option>
+                      <option value="+972 Israel">+972 Israel</option>
+                      <option value="+39 Italy">+39 Italy</option>
+                      <option value="+1 Jamaica">+1 Jamaica</option>
+                      <option value="+81 Japan">+81 Japan</option>
+                      <option value="+44 Jersey">+44 Jersey</option>
+                      <option value="+962 Jordan">+962 Jordan</option>
+                      <option value="+7 Kazakhstan">+7 Kazakhstan</option>
+                      <option value="+254 Kenya">+254 Kenya</option>
+                      <option value="+686 Kiribati">+686 Kiribati</option>
+                      <option value="+965 Kuwait">+965 Kuwait</option>
+                      <option value="+996 Kyrgyzstan">+996 Kyrgyzstan</option>
+                      <option value="+856 Laos">+856 Laos</option>
+                      <option value="+371 Latvia">+371 Latvia</option>
+                      <option value="+961 Lebanon">+961 Lebanon</option>
+                      <option value="+266 Lesotho">+266 Lesotho</option>
+                      <option value="+231 Liberia">+231 Liberia</option>
+                      <option value="+218 Libya">+218 Libya</option>
+                      <option value="+423 Liechtenstein">+423 Liechtenstein</option>
+                      <option value="+370 Lithuania">+370 Lithuania</option>
+                      <option value="+352 Luxembourg">+352 Luxembourg</option>
+                      <option value="+853 Macau">+853 Macau</option>
+                      <option value="+261 Madagascar">+261 Madagascar</option>
+                      <option value="+265 Malawi">+265 Malawi</option>
+                      <option value="+60 Malaysia">+60 Malaysia</option>
+                      <option value="+960 Maldives">+960 Maldives</option>
+                      <option value="+223 Mali">+223 Mali</option>
+                      <option value="+356 Malta">+356 Malta</option>
+                      <option value="+692 Marshall Islands">+692 Marshall Islands</option>
+                      <option value="+596 Martinique">+596 Martinique</option>
+                      <option value="+222 Mauritania">+222 Mauritania</option>
+                      <option value="+230 Mauritius">+230 Mauritius</option>
+                      <option value="+262 Mayotte">+262 Mayotte</option>
+                      <option value="+52 Mexico">+52 Mexico</option>
+                      <option value="+691 Micronesia">+691 Micronesia</option>
+                      <option value="+373 Moldova">+373 Moldova</option>
+                      <option value="+377 Monaco">+377 Monaco</option>
+                      <option value="+976 Mongolia">+976 Mongolia</option>
+                      <option value="+382 Montenegro">+382 Montenegro</option>
+                      <option value="+1 Montserrat">+1 Montserrat</option>
+                      <option value="+212 Morocco">+212 Morocco</option>
+                      <option value="+258 Mozambique">+258 Mozambique</option>
+                      <option value="+95 Myanmar">+95 Myanmar</option>
+                      <option value="+264 Namibia">+264 Namibia</option>
+                      <option value="+674 Nauru">+674 Nauru</option>
+                      <option value="+977 Nepal">+977 Nepal</option>
+                      <option value="+31 Netherlands">+31 Netherlands</option>
+                      <option value="+687 New Caledonia">+687 New Caledonia</option>
+                      <option value="+64 New Zealand">+64 New Zealand</option>
+                      <option value="+505 Nicaragua">+505 Nicaragua</option>
+                      <option value="+227 Niger">+227 Niger</option>
+                      <option value="+234 Nigeria">+234 Nigeria</option>
+                      <option value="+683 Niue">+683 Niue</option>
+                      <option value="+850 North Korea">+850 North Korea</option>
+                      <option value="+1 Northern Mariana Islands">+1 Northern Mariana Islands</option>
+                      <option value="+47 Norway">+47 Norway</option>
+                      <option value="+968 Oman">+968 Oman</option>
+                      <option value="+92 Pakistan">+92 Pakistan</option>
+                      <option value="+680 Palau">+680 Palau</option>
+                      <option value="+970 Palestine">+970 Palestine</option>
+                      <option value="+507 Panama">+507 Panama</option>
+                      <option value="+675 Papua New Guinea">+675 Papua New Guinea</option>
+                      <option value="+595 Paraguay">+595 Paraguay</option>
+                      <option value="+51 Peru">+51 Peru</option>
+                      <option value="+63 Philippines">+63 Philippines</option>
+                      <option value="+48 Poland">+48 Poland</option>
+                      <option value="+351 Portugal">+351 Portugal</option>
+                      <option value="+1 Puerto Rico">+1 Puerto Rico</option>
+                      <option value="+974 Qatar">+974 Qatar</option>
+                      <option value="+262 Réunion">+262 Réunion</option>
+                      <option value="+40 Romania">+40 Romania</option>
+                      <option value="+7 Russia">+7 Russia</option>
+                      <option value="+250 Rwanda">+250 Rwanda</option>
+                      <option value="+590 Saint Barthélemy">+590 Saint Barthélemy</option>
+                      <option value="+290 Saint Helena">+290 Saint Helena</option>
+                      <option value="+1 Saint Kitts and Nevis">+1 Saint Kitts and Nevis</option>
+                      <option value="+1 Saint Lucia">+1 Saint Lucia</option>
+                      <option value="+590 Saint Martin">+590 Saint Martin</option>
+                      <option value="+508 Saint Pierre and Miquelon">+508 Saint Pierre and Miquelon</option>
+                      <option value="+1 Saint Vincent and the Grenadines">+1 Saint Vincent and the Grenadines</option>
+                      <option value="+685 Samoa">+685 Samoa</option>
+                      <option value="+378 San Marino">+378 San Marino</option>
+                      <option value="+239 São Tomé and Príncipe">+239 São Tomé and Príncipe</option>
+                      <option value="+966 Saudi Arabia">+966 Saudi Arabia</option>
+                      <option value="+221 Senegal">+221 Senegal</option>
+                      <option value="+381 Serbia">+381 Serbia</option>
+                      <option value="+248 Seychelles">+248 Seychelles</option>
+                      <option value="+232 Sierra Leone">+232 Sierra Leone</option>
+                      <option value="+65 Singapore">+65 Singapore</option>
+                      <option value="+421 Slovakia">+421 Slovakia</option>
+                      <option value="+386 Slovenia">+386 Slovenia</option>
+                      <option value="+677 Solomon Islands">+677 Solomon Islands</option>
+                      <option value="+252 Somalia">+252 Somalia</option>
+                      <option value="+27 South Africa">+27 South Africa</option>
+                      <option value="+82 South Korea">+82 South Korea</option>
+                      <option value="+34 Spain">+34 Spain</option>
+                      <option value="+94 Sri Lanka">+94 Sri Lanka</option>
+                      <option value="+249 Sudan">+249 Sudan</option>
+                      <option value="+597 Suriname">+597 Suriname</option>
+                      <option value="+46 Sweden">+46 Sweden</option>
+                      <option value="+41 Switzerland">+41 Switzerland</option>
+                      <option value="+963 Syria">+963 Syria</option>
+                      <option value="+886 Taiwan">+886 Taiwan</option>
+                      <option value="+992 Tajikistan">+992 Tajikistan</option>
+                      <option value="+255 Tanzania">+255 Tanzania</option>
+                      <option value="+66 Thailand">+66 Thailand</option>
+                      <option value="+228 Togo">+228 Togo</option>
+                      <option value="+690 Tokelau">+690 Tokelau</option>
+                      <option value="+676 Tonga">+676 Tonga</option>
+                      <option value="+1 Trinidad and Tobago">+1 Trinidad and Tobago</option>
+                      <option value="+216 Tunisia">+216 Tunisia</option>
+                      <option value="+90 Turkey">+90 Turkey</option>
+                      <option value="+993 Turkmenistan">+993 Turkmenistan</option>
+                      <option value="+1 Turks and Caicos Islands">+1 Turks and Caicos Islands</option>
+                      <option value="+688 Tuvalu">+688 Tuvalu</option>
+                      <option value="+1 U.S. Virgin Islands">+1 U.S. Virgin Islands</option>
+                      <option value="+256 Uganda">+256 Uganda</option>
+                      <option value="+380 Ukraine">+380 Ukraine</option>
+                      <option value="+971 United Arab Emirates">+971 United Arab Emirates</option>
+                      <option value="+44 United Kingdom">+44 United Kingdom</option>
+                      <option value="+598 Uruguay">+598 Uruguay</option>
+                      <option value="+998 Uzbekistan">+998 Uzbekistan</option>
+                      <option value="+678 Vanuatu">+678 Vanuatu</option>
+                      <option value="+379 Vatican City">+379 Vatican City</option>
+                      <option value="+58 Venezuela">+58 Venezuela</option>
+                      <option value="+84 Vietnam">+84 Vietnam</option>
+                      <option value="+681 Wallis and Futuna">+681 Wallis and Futuna</option>
+                      <option value="+967 Yemen">+967 Yemen</option>
+                      <option value="+260 Zambia">+260 Zambia</option>
+                      <option value="+263 Zimbabwe">+263 Zimbabwe</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label for="phone">Phone</label>
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      autocomplete="tel"
+                      placeholder="(201) 555-0123"
+                      data-phone
+                      required
+                    />
+                    <p class="help muted" style="margin-top:2px;">
+                      Formatting adapts to your selected numbering plan.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+                  </div>
+
+                  <div class="field">
+                    <label for="altContact">Preferred contact method</label>
+                    <select id="altContact" name="altContact" required>
+                      <option value="" selected disabled>Select one</option>
+                      <option value="Email">Email</option>
+                      <option value="Phone">Phone</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- EVENT -->
+                <div class="mini-card" style="margin-top: 18px;">
+                  <div class="mini-title">Event</div>
+                  <div class="mini-text muted">
+                    Select your Occasion, then add one or multiple schedule dates. The Weather panel will align to your venue and selected schedule item.
+                  </div>
+                </div>
+
+                <!-- Occasion -->
+                <div class="field" style="margin-top: 14px;">
+                  <label for="occasion">Occasion</label>
+                  <select id="occasion" name="occasion" required data-occasion>
+                    <option value="" selected disabled>Select one</option>
+                    <option value="Anniversary or Milestone Event">Anniversary or Milestone Event</option>
+                    <option value="Engagement or Mangni">Engagement or Mangni</option>
+                    <option value="Mehndi Celebration">Mehndi Celebration</option>
+                    <option value="Multi-Day Wedding Production">Multi-Day Wedding Production</option>
+                    <option value="Nikah Ceremony">Nikah Ceremony</option>
+                    <option value="Other">Other</option>
+                    <option value="Pre-Wedding Evening">Pre-Wedding Evening</option>
+                    <option value="Private or Intimate Celebration">Private or Intimate Celebration</option>
+                    <option value="Rukhsati Farewell">Rukhsati Farewell</option>
+                    <option value="Walima Reception">Walima Reception</option>
+                  </select>
+                </div>
+
+                <!-- Schedule Builder (multi-date + start time + duration) -->
+                <div class="mini-card" style="margin-top: 14px;">
+                  <div class="mini-title">Event schedule</div>
+                  <div class="mini-text muted">
+                    Add one or multiple dates. Include start time and duration so outdoor conditions align with your event window.
+                  </div>
+                </div>
+
+                <div class="stack" style="margin-top: 12px;" data-schedule>
+                  <!-- schedule blocks injected by main.js -->
+                </div>
+
+                <div class="row" style="margin-top: 12px; justify-content:space-between; align-items:center;">
+                  <span class="muted small">
+                    Tip: Multi-day weddings can include Mehndi, Nikah, and Walima. Add only what applies.
+                  </span>
+                  <button class="btn" type="button" data-schedule-add>Add another date</button>
+                </div>
+
+                <!-- Keep legacy fields to avoid breaking existing submission logic until main.js is updated -->
+                <input id="eventDate" name="eventDate" type="hidden" value="" />
+                <input id="eventStartTime" name="eventStartTime" type="hidden" value="" />
+                <input id="eventDuration" name="eventDuration" type="hidden" value="" />
+
+                <!-- VENUE -->
+                <div class="mini-card" style="margin-top: 18px;">
+                  <div class="mini-title">Venue</div>
+                  <div class="mini-text muted">
+                    Use a real address for precise weather and outdoor planning.
+                  </div>
+                </div>
+
+                <div class="field" style="margin-top: 14px;">
+                  <label for="venueName">Venue name</label>
+                  <input id="venueName" name="venueName" type="text" placeholder="Venue name" required />
+                </div>
+
+                <div class="field">
+                  <label for="venueStreet">Street address</label>
+                  <input id="venueStreet" name="venueStreet" type="text" placeholder="123 Venue Blvd" required data-venue-street />
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="venueCity">City</label>
+                    <input id="venueCity" name="venueCity" type="text" placeholder="City" required data-venue-city />
+                  </div>
+
+                  <div class="field">
+                    <label for="venueState">State</label>
+                    <select id="venueState" name="venueState" required data-venue-state>
+                      <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option><option value="AR">AR</option>
+                      <option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DE">DE</option>
+                      <option value="DC">DC</option>
+                      <option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="ID">ID</option>
+                      <option value="IL">IL</option><option value="IN">IN</option><option value="IA">IA</option><option value="KS">KS</option>
+                      <option value="KY">KY</option><option value="LA">LA</option><option value="ME">ME</option><option value="MD">MD</option>
+                      <option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option><option value="MS">MS</option>
+                      <option value="MO">MO</option><option value="MT">MT</option><option value="NE">NE</option><option value="NV">NV</option>
+                      <option value="NH">NH</option><option value="NJ" selected>NJ</option><option value="NM">NM</option><option value="NY">NY</option>
+                      <option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option><option value="OK">OK</option>
+                      <option value="OR">OR</option><option value="PA">PA</option><option value="RI">RI</option><option value="SC">SC</option>
+                      <option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option>
+                      <option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option><option value="WV">WV</option>
+                      <option value="WI">WI</option><option value="WY">WY</option>
+
+                      <option value="AS">AS</option>
+                      <option value="GU">GU</option>
+                      <option value="MP">MP</option>
+                      <option value="PR">PR</option>
+                      <option value="VI">VI</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="field" style="margin-top: 0;">
+                  <label for="venueZip">Zip code</label>
+                  <input id="venueZip" name="venueZip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="Zip code" required data-venue-zip />
+                </div>
+
+                <!-- GUESTS + BUDGET -->
+                <div class="mini-card" style="margin-top: 18px;">
+                  <div class="mini-title">Scope</div>
+                  <div class="mini-text muted">Guest profile and investment range help us propose the right scale.</div>
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="guestCount">Guest count</label>
+                    <select id="guestCount" name="guestCount" required>
+                      <option value="" selected disabled>Select one</option>
+                      <option value="Up to 100">Up to 100</option>
+                      <option value="Up to 250">Up to 250</option>
+                      <option value="Up to 500">Up to 500</option>
+                      <option value="Up to 750">Up to 750</option>
+                      <option value="1000+">1000+</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label for="budgetCurrency">Budget currency</label>
+                    <select id="budgetCurrency" name="budgetCurrency" required>
+                      <option value="USD" selected>USD — United States Dollar</option>
+                      <option value="CAD">CAD — Canadian Dollar</option>
+                      <option value="GBP">GBP — British Pound</option>
+                      <option value="EUR">EUR — Euro</option>
+                      <option value="AED">AED — UAE Dirham</option>
+                      <option value="SAR">SAR — Saudi Riyal</option>
+                      <option value="QAR">QAR — Qatari Riyal</option>
+                      <option value="KWD">KWD — Kuwaiti Dinar</option>
+                      <option value="INR">INR — Indian Rupee</option>
+                      <option value="PKR">PKR — Pakistani Rupee</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="budgetBasis">Budget basis</label>
+                    <select id="budgetBasis" name="budgetBasis" required>
+                      <option value="" selected disabled>Select one</option>
+                      <option value="Total décor investment">Total décor investment</option>
+                      <option value="Per-day (multi-day events)">Per-day (multi-day events)</option>
+                      <option value="Estimate (not sure yet)">Estimate (not sure yet)</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label for="budgetAmount">Budget amount</label>
+                    <input
+                      id="budgetAmount"
+                      name="budgetAmount"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="off"
+                      placeholder="50,000"
+                      data-budget-amount
+                      required
+                    />
+                    <p class="help muted" style="margin-top:2px;">
+                      Enter a number. We format automatically for clarity.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="field" style="margin-top: 6px;">
+                  <label style="display:flex; align-items:center; justify-content:space-between; gap: 12px;">
+                    <span>Use a range (optional)</span>
+                    <span class="row" style="gap:10px;">
+                      <input id="budgetUseRange" name="budgetUseRange" type="checkbox" data-budget-range-toggle style="width:18px;height:18px;margin:0;" />
+                      <span class="muted small">Min / Max</span>
+                    </span>
+                  </label>
+
+                  <div class="form-row" data-budget-range style="display:none; margin-top: 2px;">
+                    <div class="field" style="margin-top: 0;">
+                      <label for="budgetMin">Minimum</label>
+                      <input id="budgetMin" name="budgetMin" type="text" inputmode="numeric" autocomplete="off" placeholder="60,000" data-budget-min />
+                    </div>
+                    <div class="field" style="margin-top: 0;">
+                      <label for="budgetMax">Maximum</label>
+                      <input id="budgetMax" name="budgetMax" type="text" inputmode="numeric" autocomplete="off" placeholder="85,000" data-budget-max />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- DESIGN -->
+                <div class="mini-card" style="margin-top: 18px;">
+                  <div class="mini-title">Design</div>
+                  <div class="mini-text muted">Direction and palette help us align style and cultural intention.</div>
+                </div>
+
+                <div class="field">
+                  <label for="designDirection">Design direction</label>
+                  <select id="designDirection" name="designDirection" required>
+                    <option value="" selected disabled>Select one</option>
+                    <option value="Architectural Editorial">Architectural Editorial</option>
+                    <option value="Classic Luxury">Classic Luxury</option>
+                    <option value="Contemporary Cultural">Contemporary Cultural</option>
+                    <option value="Garden Romance">Garden Romance</option>
+                    <option value="Modern Minimal">Modern Minimal</option>
+                    <option value="Moody Elegance">Moody Elegance</option>
+                    <option value="Regal Royal">Regal Royal</option>
+                    <option value="Soft Traditional">Soft Traditional</option>
+                  </select>
+                </div>
+
+                <!-- Palette -->
+                <div class="field">
+                  <label>Palette</label>
+
+                  <div class="palette-group">
+                    <p class="help muted">Primary colors</p>
+                    <div class="paint-strip" aria-label="Primary palette">
+                      <label class="paint-chip" style="--chip:#c7a24a">
+                        <input class="paint-input" type="color" name="primary1" value="#c7a24a"
+                          aria-label="Primary color 1"
+                          oninput="this.closest('.paint-chip').style.setProperty('--chip', this.value)" />
+                      </label>
+
+                      <label class="paint-chip" style="--chip:#5b0b1f">
+                        <input class="paint-input" type="color" name="primary2" value="#5b0b1f"
+                          aria-label="Primary color 2"
+                          oninput="this.closest('.paint-chip').style.setProperty('--chip', this.value)" />
+                      </label>
+
+                      <label class="paint-chip" style="--chip:#0c0d10">
+                        <input class="paint-input" type="color" name="primary3" value="#0c0d10"
+                          aria-label="Primary color 3"
+                          oninput="this.closest('.paint-chip').style.setProperty('--chip', this.value)" />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="palette-group" style="margin-top:12px;">
+                    <p class="help muted">Secondary colors</p>
+                    <div class="paint-strip" aria-label="Secondary palette">
+                      <label class="paint-chip" style="--chip:#fbf7ef">
+                        <input class="paint-input" type="color" name="secondary1" value="#fbf7ef"
+                          aria-label="Secondary color 1"
+                          oninput="this.closest('.paint-chip').style.setProperty('--chip', this.value)" />
+                      </label>
+
+                      <label class="paint-chip" style="--chip:#e9e5de">
+                        <input class="paint-input" type="color" name="secondary2" value="#e9e5de"
+                          aria-label="Secondary color 2"
+                          oninput="this.closest('.paint-chip').style.setProperty('--chip', this.value)" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Inspiration Pictures & Floor Plan -->
+                <div class="field">
+                  <label for="uploads">Inspiration pictures and floor plan</label>
+                  <input id="uploads" name="uploads" type="file" multiple data-uploads />
+                  <p class="help muted">Up to 3 files. Any file type is accepted. Attachments are not included in the email.</p>
+                </div>
+
+                <div class="field">
+                  <label for="inspirationLinks">Inspiration links</label>
+                  <textarea
+                    id="inspirationLinks"
+                    name="inspirationLinks"
+                    rows="3"
+                    placeholder="Paste share links such as Google Drive, Dropbox, iCloud, or a website page"
+                  ></textarea>
+                </div>
+
+                <!-- Tell Us About Your Vision -->
+                <div class="field">
+                  <label for="notes">Tell us about your vision</label>
+                  <textarea
+                    id="notes"
+                    name="notes"
+                    rows="6"
+                    placeholder="Additional details not already covered. Priorities, cultural considerations, timing, and the feeling you want when you walk in."
+                  ></textarea>
+                </div>
+
+                <div class="form-actions">
+                  <button class="btn primary" type="submit">Send inquiry</button>
+                  <a class="btn ghost" href="gallery.html">View gallery</a>
+                </div>
+              </form>
+            </div>
+
+            <!-- RIGHT: WEATHER (Apple-style live card, unit toggle near temp, hourly centered, stacked events) -->
+            <aside
+              class="panel weather-card"
+              data-weather-panel
+              data-weather-theme="clear"
+              data-weather-night="false"
+              aria-label="Weather forecast"
+            >
+              <!-- Live layers (visual only; CSS + theme state drives appearance) -->
+              <div class="wx-live" aria-hidden="true">
+                <div class="wx-live-base"></div>
+                <div class="wx-live-glow"></div>
+                <div class="wx-live-noise"></div>
+              </div>
+
+              <!-- Header -->
+              <div class="wx-head">
+                <div class="wx-head-left">
+                  <div class="wx-date" data-weather-date>Loading date…</div>
+                  <div class="wx-loc" data-weather-location>Detecting location…</div>
+                </div>
+
+                <div class="wx-head-right">
+                  <span class="wx-chip" data-weather-mode>Venue forecast</span>
+                  <span class="wx-chip wx-chip-verified" data-weather-verified style="display:none;">Verified</span>
+                  <span class="wx-chip" data-weather-approx style="display:none;">Approximate</span>
+                </div>
+              </div>
+
+              <!-- Hero -->
+              <div class="wx-hero">
+                <div class="wx-hero-left">
+                  <div class="wx-temp-row">
+                    <div class="wx-temp serif" data-weather-temp>—</div>
+
+                    <!-- Unit toggle near temperature (locale default + persistent user toggle handled in main.js) -->
+                    <button class="wx-unit" type="button" data-weather-unit-toggle aria-label="Toggle temperature unit">
+                      <span class="wx-unit-val" data-weather-unit>°</span>
+                    </button>
+                  </div>
+
+                  <div class="wx-feels muted" data-weather-feels>Feels like —</div>
+
+                  <div class="wx-badges">
+                    <span class="wx-badge" data-weather-badge style="display:none;"></span>
+                    <span class="wx-badge wx-badge-soft" data-weather-confidence style="display:none;"></span>
+                  </div>
+                </div>
+
+                <div class="wx-hero-right" aria-hidden="true">
+                  <div class="wx-icon" data-weather-icon></div>
+                  <div class="wx-cond muted" data-weather-condition>—</div>
+                </div>
+              </div>
+
+              <!-- Metrics -->
+              <div class="wx-metrics" role="group" aria-label="Weather details">
+                <div class="wx-metric">
+                  <div class="wx-metric-ico" aria-hidden="true" data-wx-ico="sunrise"></div>
+                  <div class="wx-metric-val" data-weather-sunrise>—</div>
+                  <div class="wx-metric-lbl muted">Sunrise</div>
+                </div>
+
+                <div class="wx-metric">
+                  <div class="wx-metric-ico" aria-hidden="true" data-wx-ico="sunset"></div>
+                  <div class="wx-metric-val" data-weather-sunset>—</div>
+                  <div class="wx-metric-lbl muted">Sunset</div>
+                </div>
+
+                <div class="wx-metric">
+                  <div class="wx-metric-ico" aria-hidden="true" data-wx-ico="wind"></div>
+                  <div class="wx-metric-val" data-weather-wind>—</div>
+                  <div class="wx-metric-lbl muted">Wind</div>
+                </div>
+
+                <div class="wx-metric">
+                  <div class="wx-metric-ico" aria-hidden="true" data-wx-ico="humidity"></div>
+                  <div class="wx-metric-val" data-weather-humidity>—</div>
+                  <div class="wx-metric-lbl muted">Humidity</div>
+                </div>
+
+                <div class="wx-metric">
+                  <div class="wx-metric-ico" aria-hidden="true" data-wx-ico="pressure"></div>
+                  <div class="wx-metric-val" data-weather-pressure>—</div>
+                  <div class="wx-metric-lbl muted">Pressure</div>
+                </div>
+
+                <div class="wx-metric">
+                  <div class="wx-metric-ico" aria-hidden="true" data-wx-ico="precip"></div>
+                  <div class="wx-metric-val" data-weather-precip>—</div>
+                  <div class="wx-metric-lbl muted">Precip</div>
+                </div>
+              </div>
+
+              <!-- Hourly: 5 cards centered around event start time (start in the middle) -->
+              <div class="wx-hourly-wrap" aria-label="Hourly outlook">
+                <div class="wx-hourly" data-weather-hourly>
+                  <button class="wx-hour" type="button" aria-label="Hour 1">
+                    <div class="wx-hour-time">—</div>
+                    <div class="wx-hour-ico" aria-hidden="true"></div>
+                    <div class="wx-hour-temp">—</div>
+                    <div class="wx-hour-wind muted">—</div>
+                  </button>
+                  <button class="wx-hour" type="button" aria-label="Hour 2">
+                    <div class="wx-hour-time">—</div>
+                    <div class="wx-hour-ico" aria-hidden="true"></div>
+                    <div class="wx-hour-temp">—</div>
+                    <div class="wx-hour-wind muted">—</div>
+                  </button>
+                  <button class="wx-hour" type="button" aria-label="Hour 3">
+                    <div class="wx-hour-time">—</div>
+                    <div class="wx-hour-ico" aria-hidden="true"></div>
+                    <div class="wx-hour-temp">—</div>
+                    <div class="wx-hour-wind muted">—</div>
+                  </button>
+                  <button class="wx-hour" type="button" aria-label="Hour 4">
+                    <div class="wx-hour-time">—</div>
+                    <div class="wx-hour-ico" aria-hidden="true"></div>
+                    <div class="wx-hour-temp">—</div>
+                    <div class="wx-hour-wind muted">—</div>
+                  </button>
+                  <button class="wx-hour" type="button" aria-label="Hour 5">
+                    <div class="wx-hour-time">—</div>
+                    <div class="wx-hour-ico" aria-hidden="true"></div>
+                    <div class="wx-hour-temp">—</div>
+                    <div class="wx-hour-wind muted">—</div>
+                  </button>
+                </div>
+
+                <svg class="wx-spark" data-weather-sparkline viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M0,12 L100,12" />
+                </svg>
+              </div>
+
+              <!-- Multi-event stacked mini-cards (shown only when multiple schedule items exist) -->
+              <div class="wx-stack" data-weather-stack style="display:none;" aria-label="Event summaries"></div>
+
+              <div class="hr" style="margin: 14px 0 10px;"></div>
+
+              <div class="row" style="justify-content:space-between; align-items:center;">
+                <div class="mini-title" style="margin:0;">5 day forecast</div>
+              </div>
+
+              <div class="weather-5day" data-weather-strip>
+                <div class="weather-day">
+                  <div class="wd-dow">—</div>
+                  <div class="wd-ico" aria-hidden="true"></div>
+                  <div class="wd-temp">—</div>
+                  <div class="wd-sub muted">—</div>
+                </div>
+                <div class="weather-day">
+                  <div class="wd-dow">—</div>
+                  <div class="wd-ico" aria-hidden="true"></div>
+                  <div class="wd-temp">—</div>
+                  <div class="wd-sub muted">—</div>
+                </div>
+                <div class="weather-day">
+                  <div class="wd-dow">—</div>
+                  <div class="wd-ico" aria-hidden="true"></div>
+                  <div class="wd-temp">—</div>
+                  <div class="wd-sub muted">—</div>
+                </div>
+                <div class="weather-day">
+                  <div class="wd-dow">—</div>
+                  <div class="wd-ico" aria-hidden="true"></div>
+                  <div class="wd-temp">—</div>
+                  <div class="wd-sub muted">—</div>
+                </div>
+                <div class="weather-day">
+                  <div class="wd-dow">—</div>
+                  <div class="wd-ico" aria-hidden="true"></div>
+                  <div class="wd-temp">—</div>
+                  <div class="wd-sub muted">—</div>
+                </div>
+              </div>
+
+              <p class="muted small" style="margin-top: 12px;" data-weather-hint>
+                Add schedule dates and a venue address for event-day conditions. Otherwise, this shows today’s forecast for your current location.
+              </p>
+            </aside>
+          </div>
+
+          <!-- PROCESS (Moved below Weather + Form) -->
+          <div class="band inquiry-band" role="region" aria-label="Process" style="margin-top: 18px;">
+            <div>
+              <h3 class="serif">Process</h3>
+              <p class="muted">A structured experience, designed to reduce noise and elevate outcome.</p>
+
+              <ol class="process-steps" style="margin-top:14px;">
+                <li class="process-step">
+                  <div class="process-title">Inquiry review</div>
+                  <div class="muted small">We confirm date feasibility, venue constraints, guest profile, and scope alignment.</div>
+                </li>
+                <li class="process-step">
+                  <div class="process-title">Design consultation</div>
+                  <div class="muted small">We define priorities, cultural considerations, and the design direction with clarity.</div>
+                </li>
+                <li class="process-step">
+                  <div class="process-title">Concept and proposal</div>
+                  <div class="muted small">A cohesive concept with palette, staging approach, floral intent, layout logic, and investment range.</div>
+                </li>
+                <li class="process-step">
+                  <div class="process-title">Production planning</div>
+                  <div class="muted small">Timeline, procurement, fabrication, and coordination are locked with accountability.</div>
+                </li>
+                <li class="process-step">
+                  <div class="process-title">Installation and reveal</div>
+                  <div class="muted small">On site execution with a hospitality mindset—clean finish, disciplined staging, seamless experience.</div>
+                </li>
+              </ol>
+
+              <div class="hr" style="margin: 18px 0;"></div>
+
+              <div class="mini-card">
+                <div class="mini-title">Outdoor note</div>
+                <div class="mini-text muted">
+                  If your event is outdoors, the Weather panel surfaces wind, rain risk, and sunset timing—key inputs for structures, draping, candles, and guest comfort.
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="align-items:flex-start;">
+              <div class="stack" style="gap: 10px;">
+                <a class="btn primary" href="services.html">Explore services</a>
+                <a class="btn" href="gallery.html">View gallery</a>
+                <a class="btn ghost" href="about.html">Our approach</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reassurance -->
+          <div class="band inquiry-band" role="region" aria-label="Reassurance">
+            <div>
+              <h3 class="serif">We review every inquiry personally.</h3>
+              <p class="muted">You will hear from us with a clear plan designed with restraint and executed with precision.</p>
+            </div>
+            <div class="row">
+              <a class="btn primary" href="services.html">Explore services</a>
+              <a class="btn" href="gallery.html">View gallery</a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
+
+  <!-- Schedule block template (used by main.js) -->
+  <template id="scheduleBlockTpl">
+    <div class="mini-card schedule-block" data-schedule-block>
+      <div class="row" style="justify-content:space-between; align-items:flex-start;">
+        <div class="stack" style="gap: 4px;">
+          <div class="mini-title">Schedule item</div>
+          <div class="muted small">Date, start time, and duration.</div>
+        </div>
+        <button type="button" class="btn ghost" data-schedule-remove aria-label="Remove this date">Remove</button>
+      </div>
+
+      <div class="form-row" style="margin-top: 12px;">
+        <div class="field" style="margin-top: 0;">
+          <label>Label (optional)</label>
+          <select name="scheduleLabel[]" data-schedule-label>
+            <option value="" selected>Optional</option>
+            <option value="Mehndi">Mehndi</option>
+            <option value="Nikah">Nikah</option>
+            <option value="Walima">Walima</option>
+            <option value="Rukhsati">Rukhsati</option>
+            <option value="Reception">Reception</option>
+            <option value="Ceremony">Ceremony</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="field" style="margin-top: 0;">
+          <label>Event date</label>
+          <input type="date" name="scheduleDate[]" required data-schedule-date />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label>Event start time</label>
+          <input type="time" name="scheduleStartTime[]" required data-schedule-start />
+        </div>
+
+        <div class="field">
+          <label>Duration</label>
+          <select name="scheduleDuration[]" required data-schedule-duration>
+            <option value="" selected disabled>Select one</option>
+            <option value="60">1 hour</option>
+            <option value="120">2 hours</option>
+            <option value="180">3 hours</option>
+            <option value="240">4 hours</option>
+            <option value="300">5 hours</option>
+            <option value="360">6 hours</option>
+            <option value="480">8 hours</option>
+            <option value="600">10 hours</option>
+            <option value="720">12 hours</option>
+            <option value="900">15 hours</option>
+            <option value="1440">Full day</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </template>
 
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
         <div class="brand-row">
-          <span class="brand-mark"></span>
+          <span class="brand-mark" aria-hidden="true"></span>
           <div>
             <div class="brand-name">Andaaz Decorations</div>
-            <div class="muted">Luxury décor & production</div>
+            <div class="muted">Luxury décor and production</div>
           </div>
         </div>
-        <p class="muted small">Culturally fluent design, hospitality-grade execution.</p>
+        <p class="muted small">Culturally fluent design with hospitality grade execution.</p>
       </div>
 
       <div class="footer-links">
         <a href="services.html">Services</a>
         <a href="gallery.html">Gallery</a>
         <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
+        <a href="contact.html">Inquiry</a>
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
       </div>

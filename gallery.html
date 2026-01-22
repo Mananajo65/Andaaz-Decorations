@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Gallery | Andaaz Decorations</title>
-  <meta name="description" content="Gallery — luxury wedding décor reveals and details: stages, florals, draping, lighting." />
+  <meta name="description" content="Gallery — luxury wedding décor reveals and details: stages, florals, draping, lighting, and add-ons." />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 
@@ -14,7 +14,7 @@
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="index.html" aria-label="Andaaz Decorations home">
-        <span class="brand-mark"></span>
+        <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-text">
           <span class="brand-name">Andaaz Decorations</span>
           <span class="brand-tag">Luxury Wedding Décor & Production</span>
@@ -48,52 +48,108 @@
 
     <section class="section">
       <div class="container">
-        <div class="tabs" role="tablist" aria-label="Gallery filters">
-          <button class="tab is-active" role="tab" aria-selected="true" data-filter="all">All</button>
-          <button class="tab" role="tab" aria-selected="false" data-filter="stage">Stage</button>
-          <button class="tab" role="tab" aria-selected="false" data-filter="florals">Florals</button>
-          <button class="tab" role="tab" aria-selected="false" data-filter="draping">Draping</button>
-          <button class="tab" role="tab" aria-selected="false" data-filter="lighting">Lighting</button>
+
+        <!-- Hyatt-style filters (matches Index aesthetics) -->
+        <div class="hyatt-tabs gallery-tabs" role="tablist" aria-label="Gallery filters" data-gallery-tabs>
+          <button class="hyatt-tab tab is-active" role="tab" aria-selected="true" data-filter="all">All</button>
+          <button class="hyatt-tab tab" role="tab" aria-selected="false" data-filter="stages">Stages</button>
+          <button class="hyatt-tab tab" role="tab" aria-selected="false" data-filter="florals">Florals</button>
+          <button class="hyatt-tab tab" role="tab" aria-selected="false" data-filter="draping">Draping</button>
+          <button class="hyatt-tab tab" role="tab" aria-selected="false" data-filter="lighting">Lighting</button>
+          <button class="hyatt-tab tab" role="tab" aria-selected="false" data-filter="addons">Add-ons</button>
         </div>
 
+        <!-- Gallery grid -->
         <div class="masonry" data-grid>
-          <figure class="masonry-item" data-tag="stage">
-            <img src="assets/img/hero.jpg" alt="Stage reveal" loading="lazy" />
-            <figcaption>Stage reveal</figcaption>
+
+          <!-- STAGES -->
+          <figure class="masonry-item" data-tag="stages" data-id="stages-1" tabindex="0">
+            <img src="assets/img/signature/stages-1.jpg" alt="Ballroom · Ivory canopy with candlelit depth" loading="lazy" />
+            <figcaption>Ballroom · Ivory canopy with candlelit depth</figcaption>
           </figure>
 
-          <figure class="masonry-item" data-tag="florals">
-            <img src="assets/img/hero.jpg" alt="Floral detail" loading="lazy" />
-            <figcaption>Floral detail</figcaption>
+          <figure class="masonry-item" data-tag="stages" data-id="stages-2" tabindex="0">
+            <img src="assets/img/signature/stages-2.jpg" alt="Reception · Clean symmetry, warm metallic glow" loading="lazy" />
+            <figcaption>Reception · Clean symmetry, warm metallic glow</figcaption>
           </figure>
 
-          <figure class="masonry-item" data-tag="draping">
-            <img src="assets/img/hero.jpg" alt="Draping architecture" loading="lazy" />
-            <figcaption>Draping architecture</figcaption>
+          <figure class="masonry-item" data-tag="stages" data-id="stages-3" tabindex="0">
+            <img src="assets/img/signature/stages-3.jpg" alt="Backdrop · Layered framing with quiet drama" loading="lazy" />
+            <figcaption>Backdrop · Layered framing with quiet drama</figcaption>
           </figure>
 
-          <figure class="masonry-item" data-tag="lighting">
-            <img src="assets/img/hero.jpg" alt="Lighting mood" loading="lazy" />
-            <figcaption>Lighting mood</figcaption>
+          <!-- FLORALS -->
+          <figure class="masonry-item" data-tag="florals" data-id="florals-1" tabindex="0">
+            <img src="assets/img/signature/florals-1.jpg" alt="Install · Texture-forward floral layering" loading="lazy" />
+            <figcaption>Install · Texture-forward floral layering</figcaption>
           </figure>
 
-          <figure class="masonry-item" data-tag="stage">
-            <img src="assets/img/hero.jpg" alt="Ballroom stage symmetry" loading="lazy" />
-            <figcaption>Ballroom symmetry</figcaption>
+          <figure class="masonry-item" data-tag="florals" data-id="florals-2" tabindex="0">
+            <img src="assets/img/signature/florals-2.jpg" alt="Tablescape · Refined detail, camera-clean lines" loading="lazy" />
+            <figcaption>Tablescape · Refined detail, camera-clean lines</figcaption>
           </figure>
 
-          <figure class="masonry-item" data-tag="florals">
-            <img src="assets/img/hero.jpg" alt="Texture-forward florals" loading="lazy" />
-            <figcaption>Texture florals</figcaption>
+          <figure class="masonry-item" data-tag="florals" data-id="florals-3" tabindex="0">
+            <img src="assets/img/signature/florals-3.jpg" alt="Scale · Statement florals that hold" loading="lazy" />
+            <figcaption>Scale · Statement florals that hold</figcaption>
           </figure>
+
+          <!-- DRAPING -->
+          <figure class="masonry-item" data-tag="draping" data-id="draping-1" tabindex="0">
+            <img src="assets/img/signature/draping-1.jpg" alt="Ceiling · Soft architecture for depth" loading="lazy" />
+            <figcaption>Ceiling · Soft architecture for depth</figcaption>
+          </figure>
+
+          <figure class="masonry-item" data-tag="draping" data-id="draping-2" tabindex="0">
+            <img src="assets/img/signature/draping-2.jpg" alt="Entrance · Elegant framing, balanced flow" loading="lazy" />
+            <figcaption>Entrance · Elegant framing, balanced flow</figcaption>
+          </figure>
+
+          <figure class="masonry-item" data-tag="draping" data-id="draping-3" tabindex="0">
+            <img src="assets/img/signature/draping-3.jpg" alt="Reveal · Refined symmetry in motion" loading="lazy" />
+            <figcaption>Reveal · Refined symmetry in motion</figcaption>
+          </figure>
+
+          <!-- LIGHTING -->
+          <figure class="masonry-item" data-tag="lighting" data-id="lighting-1" tabindex="0">
+            <img src="assets/img/signature/lighting-1.jpg" alt="Ambience · Warm light, controlled highlights" loading="lazy" />
+            <figcaption>Ambience · Warm light, controlled highlights</figcaption>
+          </figure>
+
+          <figure class="masonry-item" data-tag="lighting" data-id="lighting-2" tabindex="0">
+            <img src="assets/img/signature/lighting-2.jpg" alt="Plan · Cinematic glow with restraint" loading="lazy" />
+            <figcaption>Plan · Cinematic glow with restraint</figcaption>
+          </figure>
+
+          <figure class="masonry-item" data-tag="lighting" data-id="lighting-3" tabindex="0">
+            <img src="assets/img/signature/lighting-3.jpg" alt="Reception · Depth and warmth that reads" loading="lazy" />
+            <figcaption>Reception · Depth and warmth that reads</figcaption>
+          </figure>
+
+          <!-- ADD-ONS -->
+          <figure class="masonry-item" data-tag="addons" data-id="addons-1" tabindex="0">
+            <img src="assets/img/signature/addons-1.jpg" alt="Arrival · An entrance that sets tone" loading="lazy" />
+            <figcaption>Arrival · An entrance that sets tone</figcaption>
+          </figure>
+
+          <figure class="masonry-item" data-tag="addons" data-id="addons-2" tabindex="0">
+            <img src="assets/img/signature/addons-2.jpg" alt="Details · Custom pieces, premium finish" loading="lazy" />
+            <figcaption>Details · Custom pieces, premium finish</figcaption>
+          </figure>
+
+          <figure class="masonry-item" data-tag="addons" data-id="addons-3" tabindex="0">
+            <img src="assets/img/signature/addons-3.jpg" alt="Flow · Walkway styling with intent" loading="lazy" />
+            <figcaption>Flow · Walkway styling with intent</figcaption>
+          </figure>
+
         </div>
 
         <div class="cta-band">
           <div>
-            <h3>Want your reveal featured here?</h3>
+            <h3 class="serif">Want your reveal featured here?</h3>
             <p class="muted">Let’s design something that feels premium, personal, and culturally true.</p>
           </div>
-          <a class="btn btn-primary" href="contact.html">Inquire</a>
+          <a class="btn primary" href="contact.html">Inquire</a>
         </div>
       </div>
     </section>
@@ -103,7 +159,7 @@
     <div class="container footer-grid">
       <div class="footer-brand">
         <div class="brand-row">
-          <span class="brand-mark"></span>
+          <span class="brand-mark" aria-hidden="true"></span>
           <div>
             <div class="brand-name">Andaaz Decorations</div>
             <div class="muted">Luxury décor & production</div>

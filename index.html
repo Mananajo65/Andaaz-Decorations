@@ -3,26 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Andaaz Decorations | Luxury Event Décor & Production</title>
-  <meta name="description" content="Luxury event décor and production for culturally rich weddings and celebrations. Stages, florals, draping, lighting, and calm execution." />
+  <title>Andaaz Decorations | Luxury Wedding Décor & Production</title>
+  <meta name="description" content="Luxury wedding décor and production with culturally fluent design and calm, venue-ready execution." />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 
 <body class="lattice-bg">
   <a class="skip-link" href="#content">Skip to content</a>
 
-  <!-- Unified header system (matches all other pages + main.js toggle behavior) -->
+  <!-- Unified header system (matches other pages + main.js toggle behavior) -->
   <header class="site-header">
     <div class="container nav-wrap">
+      <!-- Match the multi-page brand system for consistency -->
       <a class="brand" href="index.html" aria-label="Andaaz Decorations home">
-        <img
-          class="brand-logo"
-          src="assets/img/andaaz-logo.png"
-          alt="Andaaz Decorations"
-          loading="eager"
-          decoding="async"
-        />
-        <span class="sr-only">Andaaz Decorations</span>
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <span class="brand-name">Andaaz Decorations</span>
+          <span class="brand-tag">Luxury Wedding Décor & Production</span>
+        </span>
       </a>
 
       <nav class="nav" aria-label="Primary">
@@ -40,52 +38,70 @@
   </header>
 
   <main id="content">
-    <section class="hero">
+    <!-- HERO -->
+    <section class="hero" aria-label="Hero">
       <div class="container">
         <div class="hero-card">
           <div class="hero-media">
-            <img src="assets/img/hero.jpg" alt="Luxury stage décor with warm lighting and layered florals" />
+            <img src="assets/img/hero.jpg" alt="Luxury wedding stage décor with warm lighting and layered florals" />
             <div class="hero-overlay" aria-hidden="true"></div>
 
             <div class="hero-copy">
               <div class="kicker">
                 <span class="kicker-dot" aria-hidden="true"></span>
-                Luxury event décor and production
+                Luxury wedding décor &amp; production
               </div>
 
-              <h1 class="serif">Design that glows.<br/>Production that holds.</h1>
+              <h1 class="serif">Design that glows.<br />Production that holds.</h1>
 
               <p>
-                Luxury event décor for culturally rich weddings and celebrations.
-                Stages, florals, draping, lighting, and on-site execution—delivered with calm precision.
+                We design refined wedding environments and execute them with discipline.
+                Every element is intentional. Every install is calm, precise, and venue-ready.
               </p>
 
-              <div class="hero-actions">
+              <div class="hero-actions" aria-label="Primary actions">
                 <a class="btn primary" href="contact.html">Inquire</a>
                 <a class="btn" href="gallery.html">View Gallery</a>
-                <a class="btn ghost" href="services.html">Explore Services</a>
               </div>
 
               <div class="pills" aria-label="Highlights">
-                <span class="pill">Stage design</span>
-                <span class="pill">Floral installs</span>
-                <span class="pill">Draping</span>
-                <span class="pill">Lighting</span>
+                <span class="pill">Venue-ready installs</span>
+                <span class="pill">Cultural fluency</span>
+                <span class="pill">Photo-forward design</span>
+                <span class="pill">On-time execution</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- HYATT-STYLE TABBED SHOWCASE -->
+        <!-- PROOF BAR -->
+        <section class="section" aria-label="Proof points" style="padding: 26px 0 10px;">
+          <div class="grid cols-3" role="list">
+            <div class="card" role="listitem">
+              <h3 class="serif">Venue-ready installs</h3>
+              <p>Install-led teams experienced in premium venues and strict timelines.</p>
+            </div>
+            <div class="card" role="listitem">
+              <h3 class="serif">Designed for the lens</h3>
+              <p>Compositions engineered for photography, lighting, and clean sightlines.</p>
+            </div>
+            <div class="card" role="listitem">
+              <h3 class="serif">Calm, controlled execution</h3>
+              <p>Clear planning, confident on-site leadership, and disciplined delivery.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SIGNATURE REVEALS (Hyatt-style slider) -->
         <section class="hyatt-wrap" aria-label="Signature reveals">
           <div class="hyatt-top">
             <div class="hyatt-top-left">
               <h2 class="serif">Signature reveals</h2>
-              <p class="sub">A moving preview of the moments we build—stages, florals, draping, and lighting.</p>
+              <p class="sub">Recent environments—designed for the moment and the lens.</p>
             </div>
 
             <div class="hyatt-top-right hyatt-all">
-              <a class="btn" href="gallery.html">All reveals</a>
+              <a class="btn" href="gallery.html">View full gallery</a>
             </div>
           </div>
 
@@ -110,155 +126,185 @@
 
                 <!-- STAGES -->
                 <article class="hyatt-slide" data-hyatt-slide data-cat="stages">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Ballroom stage reveal" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=stages&id=stages-1">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/stages-1.jpg" alt="Ballroom reveal with layered framing" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Stage</div>
-                      <div class="slide-title serif">Ballroom Stage Reveal</div>
+                      <div class="slide-kicker">Ballroom</div>
+                      <div class="slide-title serif">Ivory canopy with candlelit depth</div>
                     </div>
                   </a>
                 </article>
 
                 <article class="hyatt-slide" data-hyatt-slide data-cat="stages">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Mehndi stage styling" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=stages&id=stages-2">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/stages-2.jpg" alt="Stage reveal with soft symmetry" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Stage</div>
-                      <div class="slide-title serif">Mehndi Stage Styling</div>
+                      <div class="slide-kicker">Reception</div>
+                      <div class="slide-title serif">Clean symmetry, warm metallic glow</div>
                     </div>
                   </a>
                 </article>
 
                 <article class="hyatt-slide" data-hyatt-slide data-cat="stages">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Backdrop framing" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=stages&id=stages-3">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/stages-3.jpg" alt="Backdrop framing with layered textures" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
                       <div class="slide-kicker">Backdrop</div>
-                      <div class="slide-title serif">Layered Backdrop Framing</div>
+                      <div class="slide-title serif">Layered framing with quiet drama</div>
                     </div>
                   </a>
                 </article>
 
                 <!-- FLORALS -->
                 <article class="hyatt-slide" data-hyatt-slide data-cat="florals">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Texture-forward florals" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=florals&id=florals-1">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/florals-1.jpg" alt="Floral install with texture-forward composition" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Florals</div>
-                      <div class="slide-title serif">Texture-Forward Florals</div>
+                      <div class="slide-kicker">Install</div>
+                      <div class="slide-title serif">Texture-forward floral layering</div>
                     </div>
                   </a>
                 </article>
 
                 <article class="hyatt-slide" data-hyatt-slide data-cat="florals">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Statement floral install" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=florals&id=florals-2">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/florals-2.jpg" alt="Tablescape with refined floral detail" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Florals</div>
-                      <div class="slide-title serif">Statement Floral Install</div>
+                      <div class="slide-kicker">Tablescape</div>
+                      <div class="slide-title serif">Refined detail, camera-clean lines</div>
                     </div>
                   </a>
                 </article>
 
                 <article class="hyatt-slide" data-hyatt-slide data-cat="florals">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Tablescape detail" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=florals&id=florals-3">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/florals-3.jpg" alt="Floral moment with elevated scale" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Centerpieces</div>
-                      <div class="slide-title serif">Tablescape Detail</div>
+                      <div class="slide-kicker">Scale</div>
+                      <div class="slide-title serif">Statement florals that hold</div>
                     </div>
                   </a>
                 </article>
 
                 <!-- DRAPING -->
                 <article class="hyatt-slide" data-hyatt-slide data-cat="draping">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Soft draping architecture" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=draping&id=draping-1">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/draping-1.jpg" alt="Draping with soft architectural structure" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Draping</div>
-                      <div class="slide-title serif">Soft Draping Architecture</div>
+                      <div class="slide-kicker">Ceiling</div>
+                      <div class="slide-title serif">Soft architecture for depth</div>
                     </div>
                   </a>
                 </article>
 
                 <article class="hyatt-slide" data-hyatt-slide data-cat="draping">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Ceiling treatment" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=draping&id=draping-2">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/draping-2.jpg" alt="Entrance draping with elegant framing" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Draping</div>
-                      <div class="slide-title serif">Ceiling Treatment</div>
+                      <div class="slide-kicker">Entrance</div>
+                      <div class="slide-title serif">Elegant framing, balanced flow</div>
                     </div>
                   </a>
                 </article>
 
                 <article class="hyatt-slide" data-hyatt-slide data-cat="draping">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Entrance draping moment" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=draping&id=draping-3">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/draping-3.jpg" alt="Draping moment with refined symmetry" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Draping</div>
-                      <div class="slide-title serif">Entrance Draping Moment</div>
+                      <div class="slide-kicker">Reveal</div>
+                      <div class="slide-title serif">Refined symmetry in motion</div>
                     </div>
                   </a>
                 </article>
 
                 <!-- LIGHTING -->
                 <article class="hyatt-slide" data-hyatt-slide data-cat="lighting">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Warm ambience tuning" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=lighting&id=lighting-1">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/lighting-1.jpg" alt="Warm lighting ambience tuned for photography" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Lighting</div>
-                      <div class="slide-title serif">Warm Ambience Tuning</div>
+                      <div class="slide-kicker">Ambience</div>
+                      <div class="slide-title serif">Warm light, controlled highlights</div>
                     </div>
                   </a>
                 </article>
 
                 <article class="hyatt-slide" data-hyatt-slide data-cat="lighting">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Stage lighting plan" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=lighting&id=lighting-2">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/lighting-2.jpg" alt="Lighting plan with cinematic glow" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Lighting</div>
-                      <div class="slide-title serif">Stage Lighting Plan</div>
+                      <div class="slide-kicker">Plan</div>
+                      <div class="slide-title serif">Cinematic glow with restraint</div>
                     </div>
                   </a>
                 </article>
 
                 <article class="hyatt-slide" data-hyatt-slide data-cat="lighting">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Reception glow strategy" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=lighting&id=lighting-3">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/lighting-3.jpg" alt="Reception lighting that adds depth" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Lighting</div>
-                      <div class="slide-title serif">Reception Glow Strategy</div>
+                      <div class="slide-kicker">Reception</div>
+                      <div class="slide-title serif">Depth and warmth that reads</div>
                     </div>
                   </a>
                 </article>
 
                 <!-- ADD-ONS -->
                 <article class="hyatt-slide" data-hyatt-slide data-cat="addons">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Entrance moment" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=addons&id=addons-1">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/addons-1.jpg" alt="Entrance moment with styling details" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Add-ons</div>
-                      <div class="slide-title serif">Entrance Moment</div>
+                      <div class="slide-kicker">Arrival</div>
+                      <div class="slide-title serif">An entrance that sets tone</div>
                     </div>
                   </a>
                 </article>
 
                 <article class="hyatt-slide" data-hyatt-slide data-cat="addons">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Custom signage details" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=addons&id=addons-2">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/addons-2.jpg" alt="Custom signage details" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Add-ons</div>
-                      <div class="slide-title serif">Custom Signage Details</div>
+                      <div class="slide-kicker">Details</div>
+                      <div class="slide-title serif">Custom pieces, premium finish</div>
                     </div>
                   </a>
                 </article>
 
                 <article class="hyatt-slide" data-hyatt-slide data-cat="addons">
-                  <a class="hyatt-card" href="gallery.html">
-                    <div class="hyatt-media"><img src="assets/img/hero.jpg" alt="Walkway styling" loading="lazy" /></div>
+                  <a class="hyatt-card" href="gallery.html?cat=addons&id=addons-3">
+                    <div class="hyatt-media">
+                      <img src="assets/img/signature/addons-3.jpg" alt="Walkway styling for guest flow" loading="lazy" />
+                    </div>
                     <div class="hyatt-meta">
-                      <div class="slide-kicker">Add-ons</div>
-                      <div class="slide-title serif">Walkway Styling</div>
+                      <div class="slide-kicker">Flow</div>
+                      <div class="slide-title serif">Walkway styling with intent</div>
                     </div>
                   </a>
                 </article>
@@ -267,96 +313,130 @@
             </div>
 
             <div class="hyatt-bottom" aria-label="Slider status">
-              <div class="hyatt-label" data-hyatt-label>Stage · Ballroom Stage Reveal</div>
+              <div class="hyatt-label" data-hyatt-label>Ballroom · Ivory canopy with candlelit depth</div>
 
               <div class="hyatt-controls">
                 <button class="hyatt-mini" type="button" aria-label="Previous panel" data-hyatt-prev><span aria-hidden="true">←</span></button>
-                <div class="hyatt-count" aria-live="polite" data-hyatt-count>1 / 1</div>
+                <div class="hyatt-count" aria-live="polite" data-hyatt-count style="display:none;">&nbsp;</div>
                 <button class="hyatt-mini" type="button" aria-label="Next panel" data-hyatt-next><span aria-hidden="true">→</span></button>
               </div>
             </div>
           </div>
         </section>
-        <!-- /HYATT-STYLE TABBED SHOWCASE -->
+        <!-- /SIGNATURE REVEALS -->
 
-        <div class="section" style="padding-top:34px">
+        <!-- SIGNATURE SERVICES -->
+        <section class="section" aria-label="Signature services" style="padding-top:34px;">
           <div class="section-header">
             <div>
               <h2 class="serif">Signature services</h2>
-              <p class="sub">A curated look, engineered to install smoothly and photograph beautifully.</p>
+              <p class="sub">A curated offering, engineered to install smoothly and photograph beautifully.</p>
             </div>
             <a class="btn" href="services.html">Explore services</a>
           </div>
 
           <div class="grid cols-3">
             <div class="card">
-              <h3 class="serif">Stage & Backdrop</h3>
-              <p>Custom stages, sofas, florals, and layered backdrops with warm, editorial lighting.</p>
+              <h3 class="serif">Stage &amp; Architecture</h3>
+              <p>Custom stages, backdrops, seating, and structural framing—scaled for your venue and sightlines.</p>
               <a class="link" href="services.html#stage">Learn more →</a>
             </div>
 
             <div class="card">
-              <h3 class="serif">Floral & Centerpieces</h3>
-              <p>Statement installs and tablescapes designed for scale, texture, and longevity.</p>
+              <h3 class="serif">Florals &amp; Tablescapes</h3>
+              <p>Statement installs and compositions designed for texture, longevity, and camera clarity.</p>
               <a class="link" href="services.html#floral">Learn more →</a>
             </div>
 
             <div class="card">
-              <h3 class="serif">Draping & Lighting</h3>
-              <p>Draping systems and lighting plans that create depth, warmth, and camera-ready ambiance.</p>
+              <h3 class="serif">Draping &amp; Lighting</h3>
+              <p>Soft architecture and controlled glow that create depth, warmth, and visual balance.</p>
               <a class="link" href="services.html#lighting">Learn more →</a>
             </div>
           </div>
 
           <div class="hr"></div>
 
-          <div class="band" role="region" aria-label="Call to action">
+          <!-- HOW IT WORKS -->
+          <div class="section-header" style="margin-top: 6px;">
             <div>
-              <h3 class="serif">Let’s build a look worth remembering.</h3>
-              <p>Share your date, venue, and guest count. We’ll recommend the right décor scope.</p>
-            </div>
-            <div class="row">
-              <a class="btn primary" href="contact.html">Inquire</a>
-              <a class="btn" href="gallery.html">See recent work</a>
+              <h2 class="serif">How it works</h2>
+              <p class="sub">Clear steps. Clean scope. Confident delivery.</p>
             </div>
           </div>
 
-        </div>
+          <div class="grid cols-3" role="list">
+            <div class="card" role="listitem">
+              <h3 class="serif">1. Inquiry &amp; vision</h3>
+              <p>You share your date, venue, and priorities. We listen for intent, not trends.</p>
+            </div>
+            <div class="card" role="listitem">
+              <h3 class="serif">2. Concept &amp; scope</h3>
+              <p>We develop visual direction, layout logic, and a clear décor scope.</p>
+            </div>
+            <div class="card" role="listitem">
+              <h3 class="serif">3. Install &amp; showtime</h3>
+              <p>Our team leads load-in, coordinates on site, and delivers a composed reveal.</p>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <!-- FEATURED MOMENT -->
+          <div class="band" role="region" aria-label="Featured moment" style="margin-top: 6px;">
+            <div>
+              <h3 class="serif">Featured moment</h3>
+              <p>Reception reveal — layered ivory textures with refined metallic warmth.</p>
+            </div>
+            <div class="row">
+              <a class="btn" href="gallery.html">See more moments</a>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <!-- FINAL CTA -->
+          <div class="band" role="region" aria-label="Call to action">
+            <div>
+              <h3 class="serif">Let’s design your reveal.</h3>
+              <p>Share your date and venue. We’ll respond with next steps and a clear plan.</p>
+            </div>
+            <div class="row">
+              <a class="btn primary" href="contact.html">Inquire</a>
+              <a class="btn" href="gallery.html">View Gallery</a>
+            </div>
+          </div>
+        </section>
+
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="brand" style="margin-bottom:10px">
-            <span class="brand-mark" aria-hidden="true"></span>
-            <span class="brand-stack">
-              <span class="brand-name serif">Andaaz Decorations</span>
-              <span class="brand-tag">Luxury event décor & production</span>
-            </span>
+  <!-- Unify footer with the rest of the site -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="brand-row">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <div class="brand-name">Andaaz Decorations</div>
+            <div class="muted">Luxury décor &amp; production</div>
           </div>
-          <p class="small">Culturally fluent décor for weddings and celebrations—designed to glow, built to install cleanly.</p>
-          <p class="small">Phone: 732-598-0455</p>
         </div>
+        <p class="muted small">Culturally fluent wedding décor and production—designed with restraint, executed with precision.</p>
+      </div>
 
-        <div>
-          <strong>Explore</strong>
-          <div class="hr"></div>
-          <p class="small"><a href="services.html">Services</a></p>
-          <p class="small"><a href="gallery.html">Gallery</a></p>
-          <p class="small"><a href="about.html">About</a></p>
-          <p class="small"><a href="contact.html">Inquire</a></p>
-        </div>
+      <div class="footer-links">
+        <a href="services.html">Services</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
 
-        <div>
-          <strong>Legal</strong>
-          <div class="hr"></div>
-          <p class="small"><a href="privacy.html">Privacy</a></p>
-          <p class="small"><a href="terms.html">Terms</a></p>
-          <p class="small">© <span data-year></span> Andaaz Decorations</p>
-        </div>
+      <div class="footer-meta">
+        <p class="muted small">© <span data-year></span> Andaaz Decorations. All rights reserved.</p>
       </div>
     </div>
   </footer>
