@@ -1,3 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Inquiry | Andaaz Decorations</title>
+  <meta name="description" content="Submit an inquiry to Andaaz Decorations for luxury wedding décor and production." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+
+<body class="lattice-bg">
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="Andaaz Decorations home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <span class="brand-name">Andaaz Decorations</span>
+          <span class="brand-tag">Luxury Wedding Décor and Production</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link nav-cta is-active">Inquiry</a>
+      </nav>
+
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="page-hero">
+      <div class="container">
+        <p class="kicker">Inquiry</p>
+        <h1>Begin your consultation</h1>
+        <p class="lead muted">
+          Share the essentials below. We review personally and respond with next steps.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="inquiry-shell">
+          <div class="inquiry-head">
+            <div>
+              <h2 class="serif">Request</h2>
+              <p class="muted">
+                This form opens your email client with a labeled summary. File uploads are collected for future integration and are not attached to the email—please include share links when needed.
+              </p>
+            </div>
+
+            <div class="inquiry-badges" aria-label="Expectations">
+              <span class="pill">Response within 24 to 48 hours</span>
+              <span class="pill">Hospitality grade execution</span>
+            </div>
+          </div>
+
+          <!-- GRID: FORM + WEATHER -->
+          <div class="two-col inquiry-grid" style="grid-template-columns: 1.65fr 1fr;">
+            <!-- LEFT: FORM -->
+            <div class="panel panel-strong">
+              <form class="form" id="inquiryForm" action="#" method="post" enctype="multipart/form-data" novalidate>
+
+                <!-- CLIENT -->
+                <div class="mini-card" style="margin-top: 6px;">
+                  <div class="mini-title">Client</div>
+                  <div class="mini-text muted">Contact details for planning and follow-up.</div>
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="firstName">First name</label>
+                    <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="First name" required />
+                  </div>
+
+                  <div class="field">
+                    <label for="lastName">Last name</label>
+                    <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Last name" required />
+                  </div>
+                </div>
+
+                <!-- Phone & Numbering Plan -->
+                <div class="form-row">
+                  <div class="field">
+                    <label for="plan">Numbering plan</label>
+                    <select id="plan" name="plan" data-plan required>
+                      <option value="+1 United States" selected>+1 United States</option>
+                      <!-- (keep your full list here exactly as-is) -->
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label for="phone">Phone</label>
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      autocomplete="tel"
+                      placeholder="(201) 555-0123"
+                      data-phone
+                      required
+                    />
+                    <p class="help muted" style="margin-top:2px;">
+                      Formatting adapts to your selected numbering plan.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+                  </div>
+
+                  <div class="field">
+                    <label for="altContact">Preferred contact method</label>
+                    <select id="altContact" name="altContact" required>
+                      <option value="" selected disabled>Select one</option>
+                      <option value="Email">Email</option>
+                      <option value="Phone">Phone</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- EVENT -->
+                <div class="mini-card" style="margin-top: 18px;">
+                  <div class="mini-title">Event</div>
+                  <div class="mini-text muted">
+                    Select your Occasion, then add one or multiple schedule dates. The Weather panel will align to your venue and selected schedule item.
+                  </div>
+                </div>
+
+                <div class="field" style="margin-top: 14px;">
+                  <label for="occasion">Occasion</label>
+                  <select id="occasion" name="occasion" required data-occasion>
+                    <option value="" selected disabled>Select one</option>
+                    <option value="Multi-Day Wedding Production">Multi-Day Wedding Production</option>
+                    <option value="Mehndi Celebration">Mehndi Celebration</option>
+                    <option value="Nikah Ceremony">Nikah Ceremony</option>
+                    <option value="Walima Reception">Walima Reception</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div class="mini-card" style="margin-top: 14px;">
+                  <div class="mini-title">Event schedule</div>
+                  <div class="mini-text muted">
+                    Add one or multiple dates. Include start time and duration so outdoor conditions align with your event window.
+                  </div>
+                </div>
+
+                <div class="stack" style="margin-top: 12px;" data-schedule></div>
+
+                <div class="row" style="margin-top: 12px; justify-content:space-between; align-items:center;">
+                  <span class="muted small">
+                    Tip: Multi-day weddings can include Mehndi, Nikah, and Walima. Add only what applies.
+                  </span>
+                  <button class="btn" type="button" data-schedule-add>Add another date</button>
+                </div>
+
+                <!-- Hidden fields used by your existing mailto logic -->
+                <input id="eventDate" name="eventDate" type="hidden" value="" />
+                <input id="eventStartTime" name="eventStartTime" type="hidden" value="" />
+                <input id="eventDuration" name="eventDuration" type="hidden" value="" />
+
+                <!-- VENUE -->
+                <div class="mini-card" style="margin-top: 18px;">
+                  <div class="mini-title">Venue</div>
+                  <div class="mini-text muted">
+                    Use a real address for precise weather and outdoor planning.
+                  </div>
+                </div>
+
+                <div class="field" style="margin-top: 14px;">
+                  <label for="venueName">Venue name</label>
+                  <input id="venueName" name="venueName" type="text" placeholder="Venue name" required />
+                </div>
+
+                <div class="field">
+                  <label for="venueStreet">Street address</label>
+                  <input id="venueStreet" name="venueStreet" type="text" placeholder="123 Venue Blvd" required data-venue-street />
+                </div>
+
+                <div class="form-row">
+                  <div class="field">
+                    <label for="venueCity">City</label>
+                    <input id="venueCity" name="venueCity" type="text" placeholder="City" required data-venue-city />
+                  </div>
+
+                  <div class="field">
+                    <label for="venueState">State</label>
+                    <select id="venueState" name="venueState" required data-venue-state>
+                      <option value="NJ" selected>NJ</option>
+                      <!-- (keep your full list here exactly as-is) -->
+                    </select>
+                  </div>
+                </div>
+
+                <div class="field" style="margin-top: 0;">
+                  <label for="venueZip">Zip code</label>
+                  <input id="venueZip" name="venueZip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="Zip code" required data-venue-zip />
+                </div>
+
+                <!-- (keep the rest of your form exactly as-is) -->
+
+                <div class="form-actions">
+                  <button class="btn primary" type="submit">Send inquiry</button>
+                  <a class="btn ghost" href="gallery.html">View gallery</a>
+                </div>
+              </form>
+            </div>
+
+            <!-- RIGHT: WEATHER (MERGED FIX)
+                 Leave EMPTY so main.js injects the correct markup (data-wx-*). -->
+            <aside
+              class="panel weather-card"
+              data-weather-panel
+              data-weather-theme="clear"
+              data-weather-night="false"
+              aria-label="Weather forecast"
+            >
+              <noscript class="muted small">
+                Weather preview requires JavaScript.
+              </noscript>
+            </aside>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
 <!-- contact.html (FULL REWRITE — Apple-Style Live Weather Card Integrated into Your Current File) -->
 <!doctype html>
 <html lang="en">

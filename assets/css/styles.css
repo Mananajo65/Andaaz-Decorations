@@ -1,3 +1,256 @@
+/* =========================================================
+   HYATT-STYLE WEATHER CARD (Target UI)
+   - Matches the "top image" layout: big temp, photo-like hero,
+     metrics row, hourly forecast cards + curve.
+   - Safe: scoped to .weather-card.wx-hyatt
+========================================================= */
+
+.weather-card.wx-hyatt{
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(199,162,74,.38);
+  box-shadow:
+    0 0 0 1px rgba(199,162,74,.10) inset,
+    0 30px 90px rgba(0,0,0,.55);
+}
+
+.weather-card.wx-hyatt::before{
+  content:"";
+  position:absolute; inset:-1px;
+  background:
+    radial-gradient(900px 600px at 65% 20%, rgba(255,180,90,.22), rgba(0,0,0,0) 55%),
+    radial-gradient(800px 500px at 45% 55%, rgba(255,255,255,.08), rgba(0,0,0,0) 60%),
+    linear-gradient(180deg, rgba(10,11,14,.25), rgba(10,11,14,.86)),
+    /* Optional: add a real image at assets/img/weather-hero.jpg */
+    url("assets/img/weather-hero.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.05) contrast(1.05);
+  opacity: .78;
+  pointer-events:none;
+}
+
+.weather-card.wx-hyatt::after{
+  content:"";
+  position:absolute; inset:-1px;
+  background:
+    radial-gradient(700px 220px at 60% 12%, rgba(255,210,135,.22), rgba(0,0,0,0) 70%),
+    radial-gradient(1100px 900px at 40% 90%, rgba(91,11,31,.18), rgba(0,0,0,0) 60%);
+  mix-blend-mode: screen;
+  opacity: .55;
+  pointer-events:none;
+}
+
+.wx-hyatt .wx-wrap{
+  position: relative;
+  z-index: 1;
+}
+
+.wx-hyatt .wx-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.wx-hyatt .wx-dateLoc{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+
+.wx-hyatt .wx-dateLine{
+  font-size: 18px;
+  letter-spacing: .2px;
+  color: rgba(255,255,255,.92);
+}
+
+.wx-hyatt .wx-locLine{
+  font-size: 14px;
+  color: rgba(255,255,255,.72);
+}
+
+.wx-hyatt .wx-chips{
+  display:flex;
+  gap: 10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.wx-hyatt .wx-chip{
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(199,162,74,.35);
+  background: rgba(0,0,0,.18);
+  color: rgba(255,255,255,.82);
+  backdrop-filter: blur(10px);
+}
+
+.wx-hyatt .wx-hero{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 18px;
+  margin: 10px 0 18px;
+  padding: 18px 18px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.18);
+  backdrop-filter: blur(14px);
+}
+
+.wx-hyatt .wx-heroLeft{
+  min-width: 0;
+}
+
+.wx-hyatt .wx-tempBig{
+  font-size: 76px;
+  line-height: .92;
+  letter-spacing: -.8px;
+  color: rgba(255,255,255,.96);
+}
+
+.wx-hyatt .wx-unitBtn{
+  margin-left: 10px;
+  transform: translateY(-18px);
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  color: rgba(255,255,255,.84);
+  cursor:pointer;
+}
+
+.wx-hyatt .wx-feels{
+  margin-top: 6px;
+  font-size: 16px;
+  color: rgba(255,255,255,.82);
+}
+
+.wx-hyatt .wx-iconBig{
+  width: 108px;
+  height: 108px;
+  display:grid;
+  place-items:center;
+  border-radius: 20px;
+  background: rgba(0,0,0,.12);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+.wx-hyatt .wx-metricsRow{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.wx-hyatt .wx-metric{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.14);
+  backdrop-filter: blur(12px);
+}
+
+.wx-hyatt .wx-metric .ico{
+  width: 34px; height: 34px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+.wx-hyatt .wx-metric .val{
+  font-size: 14px;
+  color: rgba(255,255,255,.90);
+  line-height: 1.1;
+}
+.wx-hyatt .wx-metric .lbl{
+  font-size: 12px;
+  color: rgba(255,255,255,.62);
+  margin-top: 2px;
+}
+
+.wx-hyatt .wx-hourlyTitle{
+  font-size: 20px;
+  margin: 14px 0 10px;
+  color: rgba(255,255,255,.92);
+}
+
+.wx-hyatt .wx-hourlyGrid{
+  display:grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.wx-hyatt .wx-hourCard{
+  padding: 12px 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.18);
+  backdrop-filter: blur(12px);
+  text-align:center;
+}
+
+.wx-hyatt .wx-hourTime{
+  font-size: 12px;
+  color: rgba(255,255,255,.72);
+  margin-bottom: 10px;
+}
+
+.wx-hyatt .wx-hourIcon{
+  height: 36px;
+  display:grid;
+  place-items:center;
+  margin-bottom: 10px;
+}
+
+.wx-hyatt .wx-hourTemp{
+  font-size: 16px;
+  color: rgba(255,255,255,.92);
+}
+
+.wx-hyatt .wx-hourWind{
+  font-size: 12px;
+  color: rgba(255,255,255,.62);
+  margin-top: 6px;
+}
+
+.wx-hyatt .wx-curveWrap{
+  margin-top: 14px;
+  padding: 8px 10px 4px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.12);
+  backdrop-filter: blur(10px);
+}
+
+.wx-hyatt svg.wx-curve{
+  width: 100%;
+  height: 74px;
+  display:block;
+}
+
+.wx-hyatt .wx-hint{
+  margin-top: 14px;
+  font-size: 12px;
+  color: rgba(255,255,255,.68);
+}
+
+/* Responsive */
+@media (max-width: 1100px){
+  .wx-hyatt .wx-metricsRow{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .wx-hyatt .wx-hourlyGrid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+@media (max-width: 720px){
+  .wx-hyatt .wx-hourlyGrid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .wx-hyatt .wx-tempBig{ font-size: 64px; }
+}
 /* =========================
    TOKENS
 ========================= */
