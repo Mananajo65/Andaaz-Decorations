@@ -1,5 +1,12 @@
+```js
 /* assets/js/modules/weather.js
-   WeatherApp (Open-Meteo) — EXACT SPEC IMPLEMENTATION
+   WeatherApp (Open-Meteo) — SPEC IMPLEMENTATION (updated to your choices)
+
+   Your locked decisions:
+   - Location: Option C (geolocation if allowed; otherwise fallback to Freehold, NJ)
+   - Refresh: A (attempt refresh on every page load; cache-first, quiet)
+   - Units default: Fahrenheit
+   - Failure: show last cached data + “updated earlier” (STALE badge when old)
 
    - Discovers panels: [data-weather-panel]
    - Injects required markup hooks (data-wx-*)
@@ -7,7 +14,7 @@
        wx_unit_v1: "c" | "f"
        wx_cache_v2: { "lat,lon": data }
        wx_last_refresh_v1: { "lat,lon": epochMs }
-   - Quiet refresh + cooldown
+   - Quiet refresh + cooldown (cooldown set to 0 to allow every load refresh attempt)
    - Unit toggle + forced refresh
    - Visibilitychange stale refresh
 */
@@ -28,10 +35,24 @@ const LS_UNIT = "wx_unit_v1";
 const LS_CACHE = "wx_cache_v2";
 const LS_LAST_REFRESH = "wx_last_refresh_v1";
 
-const AUTO_REFRESH_COOLDOWN_MIN = 10;
+// You selected refresh on every page load.
+// Keep cooldown at 0 so each load can attempt a quiet refresh (cache-first render still happens).
+const AUTO_REFRESH_COOLDOWN_MIN = 0;
+
+// Consider data stale after 30 minutes (shows STALE badge + visibility refresh triggers)
 const STALE_MINUTES = 30;
 
 const OM_BASE = "https://api.open-meteo.com/v1/forecast";
+
+// Freehold, NJ fallback (Borough-ish). If you want Township instead, tell me and I’ll swap coords.
+const FREEHOLD_FALLBACK = {
+  lat: 40.2601,
+  lon: -74.2735,
+  tz: "auto",
+  city: "Freehold",
+  admin1: "NJ",
+  displayName: "Freehold, NJ",
+};
 
 function cacheKey(place) {
   return `${Number(place.lat).toFixed(4)},${Number(place.lon).toFixed(4)}`;
@@ -39,11 +60,12 @@ function cacheKey(place) {
 
 function getUnit() {
   const v = String(localStorage.getItem(LS_UNIT) || "").toLowerCase();
-  return v === "f" ? "f" : "c";
+  // Default to Fahrenheit unless explicitly stored as "c"
+  return v === "c" ? "c" : "f";
 }
 
 function setUnit(u) {
-  localStorage.setItem(LS_UNIT, u === "f" ? "f" : "c");
+  localStorage.setItem(LS_UNIT, u === "c" ? "c" : "f");
 }
 
 export function getCachedForecast(key) {
@@ -76,7 +98,6 @@ function setLastRefresh(key, epochMs) {
    B) MARKUP INJECTION
 ========================= */
 export function ensureWeatherMarkup(panel) {
-  // Required: inject markup with ALL data-wx-* hooks
   if (panel.__wxMarkupReady) return;
   panel.__wxMarkupReady = true;
 
@@ -100,7 +121,7 @@ export function ensureWeatherMarkup(panel) {
         <div>
           <div class="wx-tempBig">
             <span data-wx-temp>—</span>
-            <button class="wx-unitBtn" type="button" data-wx-unitbtn aria-label="Toggle units">°C</button>
+            <button class="wx-unitBtn" type="button" data-wx-unitbtn aria-label="Toggle units">°F</button>
           </div>
           <div class="wx-feels" data-wx-feels>Feels like —</div>
           <div class="wx-feels" data-wx-cond>—</div>
@@ -178,11 +199,7 @@ export async function fetchForecast({ lat, lon, tz }) {
   const params = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
-
-    // spec: timezone=auto (or explicit tz)
     timezone: tz ? String(tz) : "auto",
-
-    // spec fields
     current: "temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m",
     hourly: "temperature_2m,weather_code,apparent_temperature",
     daily: "temperature_2m_max,temperature_2m_min,weather_code",
@@ -190,10 +207,9 @@ export async function fetchForecast({ lat, lon, tz }) {
   });
 
   const url = `${OM_BASE}?${params.toString()}`;
-  const res = await fetch(url, { headers: { "Accept": "application/json" } });
+  const res = await fetch(url, { headers: { Accept: "application/json" } });
   if (!res.ok) throw new Error(`Open-Meteo error: ${res.status}`);
-  const data = await res.json();
-  return data;
+  return await res.json();
 }
 
 /* =========================
@@ -220,7 +236,6 @@ function wxLabel(code) {
 function wxSvg(code) {
   const c = Number(code);
 
-  // Minimal, elegant line icons (stroke inherits via CSS)
   const sun = `
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M12 3v2M12 19v2M4.22 4.22l1.41 1.41M18.36 18.36l1.41 1.41M3 12h2M19 12h2M4.22 19.78l1.41-1.41M18.36 5.64l1.41-1.41"/>
@@ -276,41 +291,33 @@ export function render(panel, data, place, unit) {
   // Reset error display (cache render should still be "clean")
   panel.setAttribute("data-wx-error", "false");
 
-  // 1) Date line from data.current.time
   const currentTime = data?.current?.time;
   $.date.textContent = formatDateLine(currentTime);
 
-  // Location line
   $.location.textContent = place.displayName || "Local area";
 
-  // 2) Temp in unit
   const cTemp = Number(data?.current?.temperature_2m);
   const shownTemp = unit === "f" ? cToF(cTemp) : cTemp;
   $.temp.textContent = `${round0(shownTemp)}°`;
 
-  // Unit button label
   $.unitBtn.textContent = unit === "f" ? "°F" : "°C";
 
-  // 3) Feels like from hourly.apparent_temperature[0]
   const feelsC = Number(data?.hourly?.apparent_temperature?.[0]);
   const feelsShown = unit === "f" ? cToF(feelsC) : feelsC;
   $.feels.textContent = `Feels like ${round0(feelsShown)}°`;
 
-  // 4) weather_code -> label + SVG icon
   const code = Number(data?.current?.weather_code);
   $.cond.textContent = wxLabel(code);
   $.icon.innerHTML = wxSvg(code);
 
-  // 5) Humidity
   const hum = Number(data?.current?.relative_humidity_2m);
   $.humidity.textContent = Number.isFinite(hum) ? `${round0(hum)}%` : "—";
 
-  // 6) Wind km/h from wind_speed_10m * 3.6 (spec)
+  // Spec: wind_speed_10m * 3.6 to km/h
   const windMs = Number(data?.current?.wind_speed_10m);
   const windKmh = Number.isFinite(windMs) ? windMs * 3.6 : NaN;
   $.wind.textContent = Number.isFinite(windKmh) ? `${round0(windKmh)} km/h` : "—";
 
-  // 7) Hi/Lo from daily max/min [0]
   const hiC = Number(data?.daily?.temperature_2m_max?.[0]);
   const loC = Number(data?.daily?.temperature_2m_min?.[0]);
   const hiShown = unit === "f" ? cToF(hiC) : hiC;
@@ -320,7 +327,6 @@ export function render(panel, data, place, unit) {
       ? `${round0(hiShown)}° / ${round0(loShown)}°`
       : "—";
 
-  // 8) Hourly strip from first 12 points
   const hTimes = data?.hourly?.time || [];
   const hTempsC = data?.hourly?.temperature_2m || [];
   const hCodes = data?.hourly?.weather_code || [];
@@ -343,7 +349,6 @@ export function render(panel, data, place, unit) {
     $.hourly.appendChild(el);
   }
 
-  // 9) Daily list from next 5 days (skip index 0 = today)
   const dTimes = data?.daily?.time || [];
   const dMaxC = data?.daily?.temperature_2m_max || [];
   const dMinC = data?.daily?.temperature_2m_min || [];
@@ -370,11 +375,9 @@ export function render(panel, data, place, unit) {
     $.daily.appendChild(row);
   }
 
-  // 10) Updated text from __cachedAt
   const cachedAt = data.__cachedAt || new Date().toISOString();
   $.updated.textContent = formatUpdated(cachedAt);
 
-  // 11) STALE badge if minutesSince(__cachedAt) >= 30
   const stale = minutesSince(cachedAt) >= STALE_MINUTES;
   $.stale.hidden = !stale;
 }
@@ -385,14 +388,15 @@ export function render(panel, data, place, unit) {
 export async function refresh(panel, place, { force = false } = {}) {
   const key = cacheKey(place);
 
-  // Cooldown
+  // If offline, don't even try.
+  if (typeof navigator !== "undefined" && navigator.onLine === false) return;
+
   const last = getLastRefresh(key);
   const now = Date.now();
   const sinceMin = (now - last) / 60000;
 
   if (!force && last && sinceMin < AUTO_REFRESH_COOLDOWN_MIN) return;
 
-  // Spinner on
   panel.setAttribute("data-wx-spin", "true");
 
   try {
@@ -401,39 +405,27 @@ export async function refresh(panel, place, { force = false } = {}) {
     setLastRefresh(key, Date.now());
 
     render(panel, data, place, getUnit());
-
-    // Spinner off
     panel.setAttribute("data-wx-spin", "false");
-  } catch (err) {
+  } catch {
     panel.setAttribute("data-wx-spin", "false");
 
     const cached = getCachedForecast(key);
     if (cached) {
-      // keep cached UI
+      // Your choice: keep cached UI (including "updated earlier"/STALE)
       render(panel, cached, place, getUnit());
       return;
     }
 
-    // No cache: show error
     panel.setAttribute("data-wx-error", "true");
   }
 }
 
 /* =========================
-   OPTIONAL CONFIG + GEO FALLBACK
+   LOCATION RESOLUTION (Option C)
 ========================= */
 async function getGeoPlaceFallback() {
-  // If no overrides provided, attempt geolocation; fallback to Newark, NJ
-  const fallback = {
-    lat: 40.7357,
-    lon: -74.1724,
-    tz: "auto",
-    city: "Newark",
-    admin1: "NJ",
-    displayName: "Newark, NJ",
-  };
-
-  if (!("geolocation" in navigator)) return fallback;
+  // Try geolocation; on deny/timeout/error -> Freehold, NJ
+  if (!("geolocation" in navigator)) return { ...FREEHOLD_FALLBACK };
 
   try {
     const pos = await new Promise((resolve, reject) => {
@@ -456,7 +448,7 @@ async function getGeoPlaceFallback() {
       displayName: "Local area",
     };
   } catch {
-    return fallback;
+    return { ...FREEHOLD_FALLBACK };
   }
 }
 
@@ -470,6 +462,8 @@ async function initPanel(panel) {
     Number.isFinite(Number(latAttr)) &&
     Number.isFinite(Number(lonAttr));
 
+  // If panel is configured with explicit coords, use them.
+  // Otherwise: Option C (geo -> fallback to Freehold, NJ)
   if (!hasCoords) {
     const geo = await getGeoPlaceFallback();
     panel.__wxPlace = geo;
@@ -479,7 +473,6 @@ async function initPanel(panel) {
   const city = panel.getAttribute("data-weather-city") || "Local area";
   const admin1 = panel.getAttribute("data-weather-admin1") || "";
   const tz = panel.getAttribute("data-weather-tz") || "auto";
-
   const displayName = admin1 ? `${city}, ${admin1}` : city;
 
   const place = {
@@ -502,26 +495,21 @@ export function initWeather() {
   const panels = Array.from(document.querySelectorAll("[data-weather-panel]"));
   if (!panels.length) return;
 
-  // Init each panel in sequence (allows async place resolution)
   panels.forEach(async (panel) => {
-    // 1) inject markup
     ensureWeatherMarkup(panel);
-
-    // 2) bind UI refs
     panel.__wx = ui(panel);
 
-    // resolve place (overrides or geo)
     const place = await initPanel(panel);
-
-    // 3) render cache immediately if available
     const key = cacheKey(place);
+
+    // Cache-first render for instant UI
     const cached = getCachedForecast(key);
     if (cached) render(panel, cached, place, getUnit());
 
-    // 4) quiet refresh
+    // Quiet refresh on every page load (your choice), unless offline
     refresh(panel, place, { force: false }).catch(() => {});
 
-    // H) unit toggle behavior
+    // Unit toggle
     panel.__wx.unitBtn.addEventListener("click", () => {
       const next = getUnit() === "f" ? "c" : "f";
       setUnit(next);
@@ -533,7 +521,7 @@ export function initWeather() {
     });
   });
 
-  // I) Refresh on tab return (stale-aware)
+  // Refresh when tab returns if cached is stale
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") return;
 
@@ -550,3 +538,4 @@ export function initWeather() {
     });
   });
 }
+```
