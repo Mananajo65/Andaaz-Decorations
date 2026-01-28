@@ -135,7 +135,7 @@
                 <div class="mini-card inquiry-section">
                   <div class="mini-title">Event</div>
                   <div class="mini-text muted">
-                    Select your Occasion, then add one or multiple schedule dates. The Weather panel will align to your venue and selected schedule item.
+                    Select your Occasion, then add one or multiple schedule dates.
                   </div>
                 </div>
 
@@ -156,7 +156,7 @@
                   </select>
                 </div>
 
-                <!-- EVENT SCHEDULE (FIXED to match rewritten inquiry.js) -->
+                <!-- EVENT SCHEDULE (for inquiry.js) -->
                 <div class="mini-card inquiry-section">
                   <div class="mini-title">Event schedule</div>
                   <div class="mini-text muted">
@@ -165,7 +165,6 @@
                 </div>
 
                 <div class="inquiry-field" style="margin-top:12px;" data-schedule-builder>
-                  <!-- inquiry.js injects rows here -->
                   <div class="stack" data-sch-list></div>
 
                   <div class="row" style="margin-top:12px; justify-content:space-between; align-items:center;">
@@ -175,7 +174,6 @@
                     <button class="btn" type="button" data-sch-add>Add another date</button>
                   </div>
 
-                  <!-- REQUIRED: inquiry.js writes the schedule summary here -->
                   <textarea name="scheduleSummary" data-sch-out hidden></textarea>
                 </div>
 
@@ -380,18 +378,15 @@
               </form>
             </div>
 
-            <!-- RIGHT: WEATHER (JS injects UI into this mount point) -->
+            <!-- RIGHT: WEATHER (JS injects UI into this mount point)
+                 Your requested behavior:
+                 - Tries geolocation (if allowed)
+                 - Otherwise falls back to Freehold, NJ (handled in weather.js)
+                 So: do NOT hardcode lat/lon here. -->
             <aside
-              <aside
-  		class="panel weather-card wx-hyatt"
- 		data-weather-panel
-  		data-weather-city="Newark"
-  		data-weather-admin1="NJ"
-  		data-weather-lat="40.7357"
-  		data-weather-lon="-74.1724"
-  		aria-label="Local weather preview">
-	</aside>
-
+              class="panel weather-card wx-hyatt"
+              data-weather-panel
+              aria-label="Local weather preview">
             </aside>
           </div>
 
@@ -451,11 +446,6 @@
     </section>
   </main>
 
-  <!-- NOTE:
-    scheduleBlockTpl removed on purpose.
-    Your rewritten inquiry.js generates its own rows and does not use this template.
-  -->
-
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
@@ -486,6 +476,7 @@
     </div>
   </footer>
 
+  <!-- Single entry point. main.js imports modules from assets/js/modules/* -->
   <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>
